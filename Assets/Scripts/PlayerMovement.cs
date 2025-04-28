@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
-    public float jumpForce = 5f;
+    private float speed = 5f;
+    private float jumpForce = 8f;
 
-    public float lookSpeed = 0.2f;   // Speed of mouse look
+    private float lookSpeed = 0.1f;   // Speed of mouse look
     private Rigidbody rb;
     private Vector3 inputMovement;
     private Vector3 cameraRotation;
