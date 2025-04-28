@@ -33,17 +33,6 @@ public class PlayerMovement : MonoBehaviour
         inputMovement = Vector3.zero;
         jumpPressed = false;
 
-          if (Keyboard.current.wKey.isPressed)
-            inputMovement.z = 1; // Move forward
-        if (Keyboard.current.sKey.isPressed)
-            inputMovement.z = -1; // Move backward
-        if (Keyboard.current.aKey.isPressed)
-            inputMovement.x = -1; // Move left
-        if (Keyboard.current.dKey.isPressed)
-            inputMovement.x = 1; // Move right
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            jumpPressed = true; // Only trigger once per keypress
-
         if (Keyboard.current.wKey.isPressed && Keyboard.current.sKey.isPressed)
             inputMovement.z = 0; // No forward/backward movement
         else if (Keyboard.current.wKey.isPressed)
@@ -56,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
             inputMovement.x = -1; // Move left
         else if (Keyboard.current.dKey.isPressed)
             inputMovement.x = 1; // Move right
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            jumpPressed = true; // Jump when space is pressed
 
     }
 
