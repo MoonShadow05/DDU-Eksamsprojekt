@@ -49,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
             jumpPressed = true; // Jump when space is pressed
 
     }
-
     void FixedUpdate()
     {
     Vector3 move = new Vector3(inputMovement.x, 0f, inputMovement.z);
