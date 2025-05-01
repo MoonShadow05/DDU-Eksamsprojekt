@@ -13,30 +13,38 @@ public class WorldGenerator : MonoBehaviour
 
     [SerializeField]
     private int _mazeDepth;
-
-    /*
+    
     [SerializeField]
-    private int _extraWallBreakPercentage;
+    private float _extraWallBreakPercentage;
 
-    [SerializeField]
-    private int _doorAmountPercentage;
-    */
+    /*[SerializeField]
+    private float _doorAmountPercentage;*/
 
     private MazeCell[,] _mazeGrid;
 
+    private int _prefabSize = 10;
+
+    private int _wallAmount;
+
     void Start()
     {
+        _wallAmount = ((_mazeDepth - 1) * _mazeWidth) + ((_mazeWidth - 1) * _mazeDepth);
+
         _mazeGrid = new MazeCell[_mazeWidth, _mazeDepth];
 
         for (int x = 0; x < _mazeWidth; x++)
         {
             for (int z = 0; z < _mazeDepth; z++)
             {
-                _mazeGrid[x,z] = Instantiate(_mazeCellPrefab, new Vector3(x * 10, 0, z * 10), Quaternion.identity);
+                _mazeGrid[x,z] = Instantiate(_mazeCellPrefab, new Vector3(x * _prefabSize, 0, z * _prefabSize), Quaternion.identity);
             }
         }
 
         GenerateMaze(null, _mazeGrid[0, 0]);
+
+        //Debug.Log("Wall amount: " + _wallAmount);
+
+        int wallDeleteAmount = (int) (_wallAmount * _extraWallBreakPercentage / 100);
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -53,15 +61,9 @@ public class WorldGenerator : MonoBehaviour
             if (nextCell != null)
             {
                 GenerateMaze(currentCell, nextCell);
+                _wallAmount--;
             }
         } while (nextCell != null);
-
-        /*
-        if (nextCell == null)
-        {
-            
-        }
-        */
     }
 
     private MazeCell GetNextUnvisitedCell(MazeCell currentCell)
@@ -73,8 +75,8 @@ public class WorldGenerator : MonoBehaviour
 
     private IEnumerable<MazeCell> GetUnvisitedCells(MazeCell currentCell)
     {
-        int x = (int)currentCell.transform.position.x / 10;
-        int z = (int)currentCell.transform.position.z / 10;
+        int x = (int)currentCell.transform.position.x / _prefabSize;
+        int z = (int)currentCell.transform.position.z / _prefabSize;
 
         if (x + 1 < _mazeWidth)
         {
