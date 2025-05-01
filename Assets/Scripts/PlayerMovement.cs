@@ -47,6 +47,10 @@ public class PlayerMovement : MonoBehaviour
             inputMovement.x = 1; // Move right
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
             jumpPressed = true; // Jump when space is pressed
+        else if (Keyboard.current.shiftKey.isPressed)
+            speed = 10f; // Sprint when shift is pressed
+        else
+            speed = 5f; // Normal speed
 
     }
     void FixedUpdate()
