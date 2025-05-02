@@ -40,4 +40,29 @@ public class MazeCell : MonoBehaviour
     {
         _backWall.SetActive(false);
     }
+
+
+    public bool LeftWallStatus()
+    {
+        bool status = _leftWall.activeSelf;
+        return status;
+    }
+
+    public bool RightWallStatus()
+    {
+        bool status = _rightWall.activeSelf;
+        return status;
+    }
+
+    public bool FrontWallStatus()
+    {
+        bool status = _frontWall.activeSelf;
+        return status;
+    }
+
+    public bool BackWallStatus()
+    {
+        bool status = _leftWall.activeSelf;
+        return status;
+    }
 }

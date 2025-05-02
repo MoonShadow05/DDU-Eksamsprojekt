@@ -149,10 +149,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mazeCellPrefab: {fileID: 6547113884137603444, guid: 12a9ea11528f99c44aab9f40c029e06b, type: 3}
-  _prefabSize: 10
-  _mazeWidth: 11
-  _mazeDepth: 11
-  _extraWallBreakPercentage: 0
+  _mazeWidth: 2
+  _mazeDepth: 3
+  _extraWallBreakPercentage: 100
 --- !u!4 &386464664
 Transform:
   m_ObjectHideFlags: 0
@@ -254,13 +253,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677808074}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7660445, z: -0.6427876, w: 0}
-  m_LocalPosition: {x: 50, y: 125, z: 70}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 55, y: 125, z: 55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 80, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1677808078
 MonoBehaviour:
   m_ObjectHideFlags: 0
