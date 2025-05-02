@@ -1,83 +1,89 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    private float speed = 5f;
-    private float jumpForce = 8f;
+    [Header("Movement Settings")]
+    public float walkSpeed = 5f;
+    public float sprintSpeed = 10f;
+    public float jumpForce = 8f;
+    public float gravity = -20f;
 
-    private float lookSpeed = 0.1f;   // Speed of mouse look
-    private Rigidbody rb;
+    [Header("Look Settings")]
+    public float lookSpeed = 0.1f;
+
+    private CharacterController controller;
     private Vector3 inputMovement;
-    private Vector3 cameraRotation;
-    private Vector3 playerRotation;
+    private Vector3 velocity;
+    private Vector2 lookInput;
+    private float xRotation = 0f;
     private bool jumpPressed;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
-        // Mouse look
-        cameraRotation.x -= Mouse.current.delta.y.ReadValue() * lookSpeed; // Up and down
-        cameraRotation.y += Mouse.current.delta.x.ReadValue() * lookSpeed; // Left and right
-        cameraRotation.x = Mathf.Clamp(cameraRotation.x, -90f, 90f); // Clamp up and down rotation
-        Camera.main.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f); // Apply rotation to camera
-        playerRotation.y = cameraRotation.y; // Keep player rotation in sync with camera
-        transform.localRotation = Quaternion.Euler(0f, playerRotation.y, 0f); // Apply rotation to player
+        // ===== MOUSE LOOK =====
+        lookInput = Mouse.current.delta.ReadValue() * lookSpeed;
+        xRotation -= lookInput.y;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
+        Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.Rotate(Vector3.up * lookInput.x);
 
-        // Keyboard input
-        inputMovement = Vector3.zero;
-        jumpPressed = false;
+        // ===== MOVEMENT INPUT =====
+        Vector2 moveInput = Vector2.zero;
+        if (Keyboard.current.wKey.isPressed) moveInput.y += 1;
+        if (Keyboard.current.sKey.isPressed) moveInput.y -= 1;
+        if (Keyboard.current.dKey.isPressed) moveInput.x += 1;
+        if (Keyboard.current.aKey.isPressed) moveInput.x -= 1;
 
-        if (Keyboard.current.wKey.isPressed && Keyboard.current.sKey.isPressed)
-            inputMovement.z = 0; // No forward/backward movement
-        else if (Keyboard.current.wKey.isPressed)
-            inputMovement.z = 1; // Move forward
-        else if (Keyboard.current.sKey.isPressed)
-            inputMovement.z = -1; // Move backward
-        if (Keyboard.current.aKey.isPressed && Keyboard.current.dKey.isPressed)
-            inputMovement.x = 0; // No left/right movement
-        else if (Keyboard.current.aKey.isPressed)
-            inputMovement.x = -1; // Move left
-        else if (Keyboard.current.dKey.isPressed)
-            inputMovement.x = 1; // Move right
+        inputMovement = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
+
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            jumpPressed = true; // Jump when space is pressed
-        else if (Keyboard.current.shiftKey.isPressed)
-            speed = 10f; // Sprint when shift is pressed
-        else
-            speed = 5f; // Normal speed
-
+            jumpPressed = true;
     }
+
     void FixedUpdate()
     {
-    Vector3 move = new Vector3(inputMovement.x, 0f, inputMovement.z);
+    float currentSpeed = Keyboard.current.shiftKey.isPressed ? sprintSpeed : walkSpeed;
 
-    // Camera-relative movement
-    Vector3 camForward = Camera.main.transform.forward;
-    Vector3 camRight = Camera.main.transform.right;
+    // Use the camera's orientation for direction
+    Transform cam = Camera.main.transform;
 
-    // Only care about XZ plane (flatten the Y)
-    camForward.y = 0;
-    camRight.y = 0;
+    // Get flat camera forward/right (ignore Y)
+    Vector3 camForward = cam.forward;
+    Vector3 camRight = cam.right;
+    camForward.y = 0f;
+    camRight.y = 0f;
     camForward.Normalize();
     camRight.Normalize();
 
-    Vector3 desiredMove = (camForward * move.z + camRight * move.x).normalized;
+    // Combine camera-relative directions with input
+    Vector3 move = (camRight * inputMovement.x + camForward * inputMovement.z).normalized * currentSpeed;
 
-    // Move the player
-    rb.MovePosition(rb.position + desiredMove * speed * Time.fixedDeltaTime);
-
-    // Jump
-    if (jumpPressed && Mathf.Abs(rb.linearVelocity.y) < 0.01f)
+    // Gravity & Jumping
+    if (controller.isGrounded)
     {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        velocity.y = -1f;
+        if (jumpPressed)
+        {
+            velocity.y = jumpForce;
+            jumpPressed = false;
+        }
     }
+    else
+    {
+        velocity.y += gravity * Time.fixedDeltaTime;
     }
 
-
+    Vector3 finalVelocity = move + Vector3.up * velocity.y;
+    controller.Move(finalVelocity * Time.fixedDeltaTime);
+    }
 }
