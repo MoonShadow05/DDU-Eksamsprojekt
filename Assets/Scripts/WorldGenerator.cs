@@ -22,6 +22,8 @@ public class WorldGenerator : MonoBehaviour
 
     private MazeCell[,] _mazeGrid;
 
+    //rivate int[,] _wallGrid;
+
     private int _prefabSize = 10;
 
     private int _wallAmount;
@@ -42,9 +44,8 @@ public class WorldGenerator : MonoBehaviour
 
         GenerateMaze(null, _mazeGrid[0, 0]);
 
-        //Debug.Log("Wall amount: " + _wallAmount);
-
-        int wallDeleteAmount = (int) (_wallAmount * _extraWallBreakPercentage / 100);
+        int _wallDeleteAmount = (int) (_wallAmount * _extraWallBreakPercentage / 100);
+        RemoveExtraCellWalls(_wallDeleteAmount);
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -159,10 +160,52 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
-    /*
-    private void GetWallsInCell(MazeCell cell)
+    
+    private void RemoveExtraCellWalls(int _wallDeleteAmount)
     {
+        while (_wallDeleteAmount != 0)
+        {
+            int x = Random.Range(0, _mazeWidth);
+            int z = Random.Range(0, _mazeDepth);
 
+            MazeCell cell = _mazeGrid[x, z];
+
+            var potentialCells = GetWallToBreak(cell, x, z);
+
+            if (!potentialCells.Any())
+            {
+                continue;
+            }
+
+            MazeCell specificNeighboorCell = potentialCells.OrderBy(_ => Random.Range(1, 10)).FirstOrDefault();
+
+            ClearWalls(cell, specificNeighboorCell);
+            _wallDeleteAmount--;
+            _wallAmount--;
+            Debug.Log(_wallAmount);
+        }
     }
-    */
+
+    private IEnumerable<MazeCell> GetWallToBreak(MazeCell cell, int x, int z)
+    {
+        if (cell.LeftWallStatus() == true && x != 0)
+        {
+            yield return _mazeGrid[x - 1, z];
+        }
+
+        if (cell.RightWallStatus() == true && x != _mazeWidth - 1)
+        {
+            yield return _mazeGrid[x + 1, z];
+        }
+
+        if (cell.FrontWallStatus() == true && z != _mazeDepth - 1)
+        {
+            yield return _mazeGrid[x, z + 1];
+        }
+
+        if (cell.BackWallStatus() == true && z != 0)
+        {
+            yield return _mazeGrid[x, z - 1];
+        }
+    }
 }
