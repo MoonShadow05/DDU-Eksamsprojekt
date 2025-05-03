@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class WorldGenerator : MonoBehaviour
 {
@@ -22,15 +23,15 @@ public class WorldGenerator : MonoBehaviour
 
     private MazeCell[,] _mazeGrid;
 
-    //rivate int[,] _wallGrid;
-
     private int _prefabSize = 10;
 
-    private int _wallAmount;
+    //private int _wallAmount;
+
+    List<List<int>> walls = new List<List<int>>();
 
     void Start()
     {
-        _wallAmount = ((_mazeDepth - 1) * _mazeWidth) + ((_mazeWidth - 1) * _mazeDepth);
+        //_wallAmount = ((_mazeDepth - 1) * _mazeWidth) + ((_mazeWidth - 1) * _mazeDepth);
 
         _mazeGrid = new MazeCell[_mazeWidth, _mazeDepth];
 
@@ -39,13 +40,31 @@ public class WorldGenerator : MonoBehaviour
             for (int z = 0; z < _mazeDepth; z++)
             {
                 _mazeGrid[x,z] = Instantiate(_mazeCellPrefab, new Vector3(x * _prefabSize, 0, z * _prefabSize), Quaternion.identity);
+
+                if (z != 0)
+                {
+                    walls.Add(new List<int> { x * 2 + 1, z * 2 - 2 }); // Back Wall
+                }
+
+                if (x != 0)
+                {
+                    walls.Add(new List<int> { x * 2 - 2, z * 2 + 1 }); // Left Wall
+                }
             }
         }
 
         GenerateMaze(null, _mazeGrid[0, 0]);
 
-        int _wallDeleteAmount = (int) (_wallAmount * _extraWallBreakPercentage / 100);
-        RemoveExtraCellWalls(_wallDeleteAmount);
+        List<int> list = new List<int> { 1 , 0 };
+        //walls.RemoveAll(sublist => sublist.SequenceEqual(list));
+
+
+        for (int i  = 0; i < walls.Count; i++)
+        {
+            Debug.Log("Coords: " + walls[i][0] + " ; " + walls[i][1]);
+        }
+        //int _wallDeleteAmount = (int) (_wallAmount * _extraWallBreakPercentage / 100);
+        //RemoveExtraCellWalls(_wallDeleteAmount);
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -62,7 +81,7 @@ public class WorldGenerator : MonoBehaviour
             if (nextCell != null)
             {
                 GenerateMaze(currentCell, nextCell);
-                _wallAmount--;
+                //_wallAmount--;
             }
         } while (nextCell != null);
     }
@@ -130,6 +149,11 @@ public class WorldGenerator : MonoBehaviour
         // Goes Right
         if (previousCell.transform.position.x < currentCell.transform.position.x)
         {
+            int x = (int)currentCell.transform.position.x / _prefabSize;
+            int z = (int)currentCell.transform.position.z / _prefabSize;
+            var wallCoords = new List<int> { x * 2 - 2, z * 2 + 1 };
+            //walls.Remove(wallCoords);
+
             previousCell.ClearRightWall();
             currentCell.ClearLeftWall();
             return;
@@ -138,6 +162,11 @@ public class WorldGenerator : MonoBehaviour
         // Goes Left
         if (previousCell.transform.position.x > currentCell.transform.position.x)
         {
+            int x = (int)previousCell.transform.position.x / _prefabSize;
+            int z = (int)previousCell.transform.position.z / _prefabSize;
+            var wallCoords = new List<int> { x * 2 - 2, z * 2 + 1 };
+            walls.Remove(wallCoords);
+
             previousCell.ClearLeftWall();
             currentCell.ClearRightWall();
             return;
@@ -146,6 +175,10 @@ public class WorldGenerator : MonoBehaviour
         // Goes Up
         if (previousCell.transform.position.z < currentCell.transform.position.z)
         {
+            int x = (int)currentCell.transform.position.x / _prefabSize;
+            int z = (int)currentCell.transform.position.z / _prefabSize;
+            walls.Remove(new List<int> { 2 + 1, z * 2 - 2 });
+
             previousCell.ClearFrontWall();
             currentCell.ClearBackWall();
             return;
@@ -154,6 +187,10 @@ public class WorldGenerator : MonoBehaviour
         // Goes Down
         if (previousCell.transform.position.z > currentCell.transform.position.z)
         {
+            int x = (int)previousCell.transform.position.x / _prefabSize;
+            int z = (int)previousCell.transform.position.z / _prefabSize;
+            walls.Remove(new List<int> { 2 + 1, z * 2 - 2 });
+
             previousCell.ClearBackWall();
             currentCell.ClearFrontWall();
             return;
@@ -161,7 +198,7 @@ public class WorldGenerator : MonoBehaviour
     }
 
     
-    private void RemoveExtraCellWalls(int _wallDeleteAmount)
+    /*private void RemoveExtraCellWalls(int _wallDeleteAmount)
     {
         while (_wallDeleteAmount != 0)
         {
@@ -207,5 +244,5 @@ public class WorldGenerator : MonoBehaviour
         {
             yield return _mazeGrid[x, z - 1];
         }
-    }
+    }*/
 }
