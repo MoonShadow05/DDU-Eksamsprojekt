@@ -25,14 +25,10 @@ public class WorldGenerator : MonoBehaviour
 
     private int _prefabSize = 10;
 
-    //private int _wallAmount;
-
     List<List<int>> walls = new List<List<int>>();
 
     void Start()
     {
-        //_wallAmount = ((_mazeDepth - 1) * _mazeWidth) + ((_mazeWidth - 1) * _mazeDepth);
-
         _mazeGrid = new MazeCell[_mazeWidth, _mazeDepth];
 
         for (int x = 0; x < _mazeWidth; x++)
@@ -55,16 +51,9 @@ public class WorldGenerator : MonoBehaviour
 
         GenerateMaze(null, _mazeGrid[0, 0]);
 
-        List<int> list = new List<int> { 1 , 0 };
-        //walls.RemoveAll(sublist => sublist.SequenceEqual(list));
+        RemoveExtraCellWalls();
 
-
-        for (int i  = 0; i < walls.Count; i++)
-        {
-            Debug.Log("Coords: " + walls[i][0] + " ; " + walls[i][1]);
-        }
-        //int _wallDeleteAmount = (int) (_wallAmount * _extraWallBreakPercentage / 100);
-        //RemoveExtraCellWalls(_wallDeleteAmount);
+        //Debug.Log(walls.Count);
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -81,7 +70,6 @@ public class WorldGenerator : MonoBehaviour
             if (nextCell != null)
             {
                 GenerateMaze(currentCell, nextCell);
-                //_wallAmount--;
             }
         } while (nextCell != null);
     }
@@ -151,8 +139,9 @@ public class WorldGenerator : MonoBehaviour
         {
             int x = (int)currentCell.transform.position.x / _prefabSize;
             int z = (int)currentCell.transform.position.z / _prefabSize;
-            var wallCoords = new List<int> { x * 2 - 2, z * 2 + 1 };
-            //walls.Remove(wallCoords);
+
+            List<int> wallCoords = new List<int> { x * 2 - 2, z * 2 + 1 };
+            walls.RemoveAll(sublist => sublist.SequenceEqual(wallCoords));
 
             previousCell.ClearRightWall();
             currentCell.ClearLeftWall();
@@ -164,8 +153,9 @@ public class WorldGenerator : MonoBehaviour
         {
             int x = (int)previousCell.transform.position.x / _prefabSize;
             int z = (int)previousCell.transform.position.z / _prefabSize;
-            var wallCoords = new List<int> { x * 2 - 2, z * 2 + 1 };
-            walls.Remove(wallCoords);
+
+            List<int> wallCoords = new List<int> { x * 2 - 2, z * 2 + 1 };
+            walls.RemoveAll(sublist => sublist.SequenceEqual(wallCoords));
 
             previousCell.ClearLeftWall();
             currentCell.ClearRightWall();
@@ -177,7 +167,9 @@ public class WorldGenerator : MonoBehaviour
         {
             int x = (int)currentCell.transform.position.x / _prefabSize;
             int z = (int)currentCell.transform.position.z / _prefabSize;
-            walls.Remove(new List<int> { 2 + 1, z * 2 - 2 });
+
+            List<int> wallCoords = new List<int> { x * 2 + 1, z * 2 - 2 };
+            walls.RemoveAll(sublist => sublist.SequenceEqual(wallCoords));
 
             previousCell.ClearFrontWall();
             currentCell.ClearBackWall();
@@ -189,7 +181,9 @@ public class WorldGenerator : MonoBehaviour
         {
             int x = (int)previousCell.transform.position.x / _prefabSize;
             int z = (int)previousCell.transform.position.z / _prefabSize;
-            walls.Remove(new List<int> { 2 + 1, z * 2 - 2 });
+
+            List<int> wallCoords = new List<int> { x * 2 + 1, z * 2 - 2 };
+            walls.RemoveAll(sublist => sublist.SequenceEqual(wallCoords));
 
             previousCell.ClearBackWall();
             currentCell.ClearFrontWall();
@@ -198,51 +192,46 @@ public class WorldGenerator : MonoBehaviour
     }
 
     
-    /*private void RemoveExtraCellWalls(int _wallDeleteAmount)
+    private void RemoveExtraCellWalls()
     {
-        while (_wallDeleteAmount != 0)
+        int wallBreakAmount = (int) (walls.Count * _extraWallBreakPercentage / 100);
+
+        for (int i = 0; i < wallBreakAmount; i++)
         {
-            int x = Random.Range(0, _mazeWidth);
-            int z = Random.Range(0, _mazeDepth);
+            int randomIndex = Random.Range(0, walls.Count);
 
-            MazeCell cell = _mazeGrid[x, z];
+            int wallX = walls[randomIndex][0];
+            int wallZ = walls[randomIndex][1];
 
-            var potentialCells = GetWallToBreak(cell, x, z);
+            Debug.Log("X: " + wallX + "   Z: " + wallZ);
 
-            if (!potentialCells.Any())
+            walls.RemoveAt(randomIndex);
+            if (wallX % 2 == 1)
             {
-                continue;
+                int cellX = (wallX - 1) / 2;
+                int cellZ = wallZ / 2;
+
+                Debug.Log("X: " + cellX + "   Z: " + cellZ);
+
+                MazeCell topCell = _mazeGrid[cellX, cellZ];
+                //MazeCell lowerCell = _mazeGrid[cellX, cellZ - 1];
+
+                topCell.ClearBackWall();
+                //lowerCell.ClearFrontWall();
+            } else
+            {
+                int cellX = wallX / 2;
+                int cellZ = (wallZ - 1) / 2;
+
+                Debug.Log("X: " + cellX + "   Z: " + cellZ);
+
+                MazeCell rightCell = _mazeGrid[cellX, cellZ];
+                //MazeCell leftCell = _mazeGrid[cellX - 1, cellZ];
+
+                rightCell.ClearLeftWall();
+                //leftCell.ClearRightWall();
             }
-
-            MazeCell specificNeighboorCell = potentialCells.OrderBy(_ => Random.Range(1, 10)).FirstOrDefault();
-
-            ClearWalls(cell, specificNeighboorCell);
-            _wallDeleteAmount--;
-            _wallAmount--;
-            Debug.Log(_wallAmount);
+            break;
         }
     }
-
-    private IEnumerable<MazeCell> GetWallToBreak(MazeCell cell, int x, int z)
-    {
-        if (cell.LeftWallStatus() == true && x != 0)
-        {
-            yield return _mazeGrid[x - 1, z];
-        }
-
-        if (cell.RightWallStatus() == true && x != _mazeWidth - 1)
-        {
-            yield return _mazeGrid[x + 1, z];
-        }
-
-        if (cell.FrontWallStatus() == true && z != _mazeDepth - 1)
-        {
-            yield return _mazeGrid[x, z + 1];
-        }
-
-        if (cell.BackWallStatus() == true && z != 0)
-        {
-            yield return _mazeGrid[x, z - 1];
-        }
-    }*/
 }

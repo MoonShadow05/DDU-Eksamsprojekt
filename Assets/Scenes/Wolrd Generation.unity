@@ -148,10 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b903396a8184c974d9244ca6163266ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mazeCellPrefab: {fileID: 6547113884137603444, guid: 12a9ea11528f99c44aab9f40c029e06b, type: 3}
+  _mazeCellPrefab: {fileID: 6321251879019114620, guid: c4dbedbd1787c3145a76682d2a0a010c, type: 3}
   _mazeWidth: 11
   _mazeDepth: 11
-  _extraWallBreakPercentage: 0
+  _extraWallBreakPercentage: 100
 --- !u!4 &386464664
 Transform:
   m_ObjectHideFlags: 0
