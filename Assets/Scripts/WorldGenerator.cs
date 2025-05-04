@@ -30,7 +30,7 @@ public class WorldGenerator : MonoBehaviour
     private MazeCell[,] _mazeGrid;
     private GameObject[,] _openingGrid;
 
-    private int _prefabSize = 10;
+    private int _prefabSize = 30;
 
     List<List<int>> walls = new List<List<int>>();
     List<List<int>> openings = new List<List<int>>();
@@ -69,7 +69,7 @@ public class WorldGenerator : MonoBehaviour
         InstantiateOpenings(_openingPrefab, openings);
         InstantiateOpenings(_doorPrefab, doors);
 
-        Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
+        //Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
