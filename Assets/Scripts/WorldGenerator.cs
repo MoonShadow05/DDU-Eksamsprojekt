@@ -10,6 +10,12 @@ public class WorldGenerator : MonoBehaviour
     private MazeCell _mazeCellPrefab;
 
     [SerializeField]
+    private GameObject _openingPrefab;
+
+    [SerializeField]
+    private GameObject _doorPrefab;
+
+    [SerializeField]
     private int _mazeWidth;
 
     [SerializeField]
@@ -18,15 +24,17 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField]
     private float _extraWallBreakPercentage;
 
-    /*[SerializeField]
-    private float _doorAmountPercentage;*/
+    [SerializeField]
+    private float _doorAmountPercentage;
 
     private MazeCell[,] _mazeGrid;
+    private GameObject[,] _openingGrid;
 
     private int _prefabSize = 10;
 
     List<List<int>> walls = new List<List<int>>();
     List<List<int>> openings = new List<List<int>>();
+    List<List<int>> doors = new List<List<int>>();
 
     void Start()
     {
@@ -54,7 +62,14 @@ public class WorldGenerator : MonoBehaviour
 
         RemoveExtraCellWalls();
 
-        Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count);
+        ReplaceOpeningsWithDoors();
+
+        _openingGrid = new GameObject[_mazeWidth * 2, _mazeDepth * 2];
+
+        InstantiateOpenings(_openingPrefab, openings);
+        InstantiateOpenings(_doorPrefab, doors);
+
+        Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -195,7 +210,6 @@ public class WorldGenerator : MonoBehaviour
             return;
         }
     }
-
     
     private void RemoveExtraCellWalls()
     {
@@ -230,6 +244,43 @@ public class WorldGenerator : MonoBehaviour
 
                 rightCell.ClearLeftWall();
                 leftCell.ClearRightWall();
+            }
+        }
+    }
+
+    private void ReplaceOpeningsWithDoors()
+    {
+        int doorAmount = (int) (openings.Count * _doorAmountPercentage / 100);
+
+        for(int i = 0; i < doorAmount; i++)
+        {
+            int randomIndex = Random.Range(0, openings.Count);
+            doors.Add(openings[randomIndex]);
+            openings.RemoveAt(randomIndex);
+        }
+    }
+    
+    private void InstantiateOpenings(GameObject prefab, List<List<int>> coordsList)
+    {
+        for (int i = 0;i < coordsList.Count;i++)
+        {
+            int x = coordsList[i][0];
+            int z = coordsList[i][1];
+
+            if (x % 2 == 1)
+            {
+                float xPos = x * _prefabSize / 2 - 5;
+                float yPos = 1;
+                float zPos = (z - 1) * _prefabSize / 2;
+
+                _openingGrid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.Euler(0, 90, 0));
+            } else
+            {
+                float xPos = (x - 1) * _prefabSize / 2;;
+                float yPos = 1;
+                float zPos = z * _prefabSize / 2 - 5;
+
+                _openingGrid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
             }
         }
     }
