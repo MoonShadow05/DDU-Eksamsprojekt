@@ -151,8 +151,8 @@ MonoBehaviour:
   _mazeCellPrefab: {fileID: 2306555772913984916, guid: 8d6044530d18bfc46a240e34bf20a332, type: 3}
   _openingPrefab: {fileID: 1556813342284139547, guid: ee4cd23eeba62164dac518cb0ad79905, type: 3}
   _doorPrefab: {fileID: 3048555110485638015, guid: c2ee6e91ddd356645bdf18b2e0ab5588, type: 3}
-  _mazeWidth: 11
-  _mazeDepth: 11
+  _mazeWidth: 20
+  _mazeDepth: 20
   _extraWallBreakPercentage: 20
   _doorAmountPercentage: 50
 --- !u!4 &131683530
