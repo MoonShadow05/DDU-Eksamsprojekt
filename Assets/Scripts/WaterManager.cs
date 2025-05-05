@@ -11,6 +11,8 @@ public class WaterManager : MonoBehaviour
     private GameObject[,] openingGrid;
     private GameObject[,] doorGrid;
 
+    private List<List<int>> unCheckedCoords = new List<List<int>>();
+
     private int gridWidth;
     private int gridDepth;
 
@@ -20,20 +22,33 @@ public class WaterManager : MonoBehaviour
     {
         WorldGenerator worldGeneration = GetComponent<WorldGenerator>();
 
-        gridWidth = worldGeneration._mazeWidth;
-        gridDepth = worldGeneration._mazeDepth;
+        //gridWidth = worldGeneration._mazeWidth;
+        //gridDepth = worldGeneration._mazeDepth;
 
-        openingGrid = worldGeneration._openingGrid;
-        doorGrid = worldGeneration._doorGrid;
+        //openingGrid = worldGeneration._openingGrid;
+        //doorGrid = worldGeneration._doorGrid;
 
-        prefabSize = worldGeneration._prefabSize;
+        //prefabSize = worldGeneration._prefabSize;
 
-        isWaterGrid = new bool[gridWidth, gridDepth];
-        isWaterGrid[0,0] = true;
+        //isWaterGrid = new bool[gridWidth, gridDepth];
+        isWaterGrid = new bool[10, 10];
+
+        List<int> coords = new List<int>{ 0, 0 };
+        unCheckedCoords.Add(coords);
+        isWaterGrid[coords[0], coords[1]] = true;
+
+        UpdateWater();
     }
 
     private void UpdateWater()
     {
-        
+        for(int i = 0; i < unCheckedCoords.Count; i++)
+        {
+            int x = unCheckedCoords[i][0];
+            int z = unCheckedCoords[i][1];
+
+            Debug.Log(isWaterGrid[x, z]);
+            //Debug.Log(isWaterGrid[-1, -1]);
+        }
     }
 }
