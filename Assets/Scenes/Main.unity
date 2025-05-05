@@ -151,8 +151,8 @@ MonoBehaviour:
   _mazeCellPrefab: {fileID: 2306555772913984916, guid: 8d6044530d18bfc46a240e34bf20a332, type: 3}
   _openingPrefab: {fileID: 8524794194308890934, guid: 8d418ef94bd785249b3d102faf6a602e, type: 3}
   _doorPrefab: {fileID: 2897879262281626434, guid: 0911db3c79e9aee4fbded4d4be509cc5, type: 3}
-  _mazeWidth: 17
-  _mazeDepth: 17
+  _mazeWidth: 6
+  _mazeDepth: 6
   _extraWallBreakPercentage: 20
   _doorAmountPercentage: 50
   _prefabSize: 30
@@ -163,6 +163,52 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131683528}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &446584318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 446584320}
+  - component: {fileID: 446584319}
+  m_Layer: 0
+  m_Name: Water Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &446584319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446584318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99856078be853f4bb295380b20e9d1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterPrefab: {fileID: 5907322198663239626, guid: 493900e83d6601d4f9d48141d6dc1f54, type: 3}
+  worldGeneration: {fileID: 131683529}
+--- !u!4 &446584320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446584318}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -293,3 +339,4 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 131683530}
   - {fileID: 7322078734253587508}
+  - {fileID: 446584320}

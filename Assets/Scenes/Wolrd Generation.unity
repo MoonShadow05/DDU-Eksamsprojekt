@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 386464664}
   - component: {fileID: 386464663}
   m_Layer: 0
-  m_Name: World Generator
+  m_Name: WorldGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,8 +151,8 @@ MonoBehaviour:
   _mazeCellPrefab: {fileID: 2306555772913984916, guid: 8d6044530d18bfc46a240e34bf20a332, type: 3}
   _openingPrefab: {fileID: 8524794194308890934, guid: 8d418ef94bd785249b3d102faf6a602e, type: 3}
   _doorPrefab: {fileID: 8672460302638214222, guid: bff591e49b7bb9445bfc65a3ec3bd10e, type: 3}
-  _mazeWidth: 5
-  _mazeDepth: 5
+  _mazeWidth: 10
+  _mazeDepth: 10
   _extraWallBreakPercentage: 20
   _doorAmountPercentage: 50
   _prefabSize: 30
@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterPrefab: {fileID: 5907322198663239626, guid: 493900e83d6601d4f9d48141d6dc1f54, type: 3}
+  worldGeneration: {fileID: 386464663}
 --- !u!4 &694932674
 Transform:
   m_ObjectHideFlags: 0
