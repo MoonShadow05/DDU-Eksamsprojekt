@@ -155,6 +155,7 @@ MonoBehaviour:
   _mazeDepth: 5
   _extraWallBreakPercentage: 20
   _doorAmountPercentage: 50
+  _prefabSize: 30
 --- !u!4 &386464664
 Transform:
   m_ObjectHideFlags: 0
@@ -199,6 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99856078be853f4bb295380b20e9d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterPrefab: {fileID: 5907322198663239626, guid: 493900e83d6601d4f9d48141d6dc1f54, type: 3}
 --- !u!4 &694932674
 Transform:
   m_ObjectHideFlags: 0
