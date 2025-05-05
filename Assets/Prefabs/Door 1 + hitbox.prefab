@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 2051751376301399650}
   - component: {fileID: 4108259041924549019}
   m_Layer: 0
-  m_Name: Door 1 Variant
+  m_Name: Door 1 + hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
