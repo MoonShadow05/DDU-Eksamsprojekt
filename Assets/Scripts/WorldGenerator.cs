@@ -29,6 +29,7 @@ public class WorldGenerator : MonoBehaviour
 
     private MazeCell[,] _mazeGrid;
     private GameObject[,] _openingGrid;
+    private GameObject[,] _doorGrid;
 
     private int _prefabSize = 30;
 
@@ -65,9 +66,10 @@ public class WorldGenerator : MonoBehaviour
         ReplaceOpeningsWithDoors();
 
         _openingGrid = new GameObject[_mazeWidth * 2, _mazeDepth * 2];
+        _doorGrid = new GameObject[_mazeWidth * 2, _mazeDepth * 2];
 
-        InstantiateOpenings(_openingPrefab, openings);
-        InstantiateOpenings(_doorPrefab, doors);
+        InstantiateOpeningsDoors(_openingPrefab, openings, _openingGrid);
+        InstantiateOpeningsDoors(_doorPrefab, doors, _doorGrid);
 
         //Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
     }
@@ -260,7 +262,7 @@ public class WorldGenerator : MonoBehaviour
         }
     }
     
-    private void InstantiateOpenings(GameObject prefab, List<List<int>> coordsList)
+    private void InstantiateOpeningsDoors(GameObject prefab, List<List<int>> coordsList, GameObject[,] grid)
     {
         for (int i = 0;i < coordsList.Count;i++)
         {
@@ -269,18 +271,18 @@ public class WorldGenerator : MonoBehaviour
 
             if (x % 2 == 1)
             {
-                float xPos = x * _prefabSize / 2 - 5;
-                float yPos = 1;
+                float xPos = (x - 1) * _prefabSize / 2;
+                float yPos = 5;
                 float zPos = (z - 1) * _prefabSize / 2;
 
-                _openingGrid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.Euler(0, 90, 0));
+                grid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.Euler(0, 90, 0));
             } else
             {
                 float xPos = (x - 1) * _prefabSize / 2;;
-                float yPos = 1;
-                float zPos = z * _prefabSize / 2 - 5;
+                float yPos = 5;
+                float zPos = (z - 1) * _prefabSize / 2;
 
-                _openingGrid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
+                grid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
             }
         }
     }
