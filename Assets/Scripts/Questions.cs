@@ -40,4 +40,18 @@ public class QuestionPopupTrigger : MonoBehaviour
             Debug.Log("Popup hidden and camera unlocked.");
         }
     }
+
+
+    public void CompleteQuestion()
+    {
+        if (cameraControlScript != null)
+            cameraControlScript.enabled = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        popupPanel.SetActive(false);
+        Debug.LogError($"Question '{popupPanel.name}' completed!");
+    }
+
 }
