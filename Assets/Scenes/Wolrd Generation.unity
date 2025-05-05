@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mazeCellPrefab: {fileID: 2306555772913984916, guid: 8d6044530d18bfc46a240e34bf20a332, type: 3}
-  _openingPrefab: {fileID: 1556813342284139547, guid: ee4cd23eeba62164dac518cb0ad79905, type: 3}
-  _doorPrefab: {fileID: 3048555110485638015, guid: c2ee6e91ddd356645bdf18b2e0ab5588, type: 3}
+  _openingPrefab: {fileID: 8524794194308890934, guid: 8d418ef94bd785249b3d102faf6a602e, type: 3}
+  _doorPrefab: {fileID: 8672460302638214222, guid: bff591e49b7bb9445bfc65a3ec3bd10e, type: 3}
   _mazeWidth: 5
   _mazeDepth: 5
   _extraWallBreakPercentage: 20
@@ -257,7 +257,7 @@ Transform:
   m_GameObject: {fileID: 1677808074}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 55, y: 125, z: 55}
+  m_LocalPosition: {x: 60, y: 150, z: 60}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
