@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mazeCellPrefab: {fileID: 2306555772913984916, guid: 8d6044530d18bfc46a240e34bf20a332, type: 3}
-  _openingPrefab: {fileID: 2779960421250421725, guid: 8d418ef94bd785249b3d102faf6a602e, type: 3}
+  _openingPrefab: {fileID: 8524794194308890934, guid: 8d418ef94bd785249b3d102faf6a602e, type: 3}
   _doorPrefab: {fileID: 8672460302638214222, guid: bff591e49b7bb9445bfc65a3ec3bd10e, type: 3}
   _mazeWidth: 11
   _mazeDepth: 11
