@@ -16,10 +16,10 @@ public class WorldGenerator : MonoBehaviour
     private GameObject _doorPrefab;
 
     [SerializeField]
-    private int _mazeWidth;
+    public int _mazeWidth;
 
     [SerializeField]
-    private int _mazeDepth;
+    public int _mazeDepth;
     
     [SerializeField]
     private float _extraWallBreakPercentage;
@@ -28,10 +28,11 @@ public class WorldGenerator : MonoBehaviour
     private float _doorAmountPercentage;
 
     private MazeCell[,] _mazeGrid;
-    private GameObject[,] _openingGrid;
-    private GameObject[,] _doorGrid;
+    public GameObject[,] _openingGrid;
+    public GameObject[,] _doorGrid;
 
-    private int _prefabSize = 30;
+    [HideInInspector]
+    public int _prefabSize = 30;
 
     List<List<int>> walls = new List<List<int>>();
     List<List<int>> openings = new List<List<int>>();
