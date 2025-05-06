@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using Unity.Collections;
+using System;
 
 public class WaterManager : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class WaterManager : MonoBehaviour
     private int prefabSize;
     
     [SerializeField] private WorldGenerator worldGeneration;
+
+    [SerializeField] private float waterFlowRate;
+    private float WaterHeight = -8.5f;
+    private GameObject[,] WaterPlaced;
+    private float OpenRoomCount = 0;
     void Start()
     {
         gridWidth = worldGeneration._mazeWidth;
@@ -30,14 +36,30 @@ public class WaterManager : MonoBehaviour
         prefabSize = worldGeneration._prefabSize;
 
         WaterGrid = new bool[gridWidth, gridDepth];
+        WaterPlaced = new GameObject[gridWidth, gridDepth];
 
         WaterGrid[0, 0] = true;
         SpawnWater(0,0);
+        WaterSpread();
         UpdateWater();
+    }
+    void Update(){
+        WaterHeight += waterFlowRate/100*Time.deltaTime;
+        
+        for(int i = 0; i < gridWidth; i++){
+            for(int j = 0 ; j < gridDepth ; j++){
+                if(WaterGrid[i, j] && WaterPlaced[i,j]){
+                    Vector3 NewPos = WaterPlaced[i, j].transform.position;
+                    NewPos.y = WaterHeight;
+                    WaterPlaced[i, j].transform.position = NewPos;
+                }
+            }
+            
+        }
     }
 
     // Funtionen tjekker for hver felt i gridet om der er plads
-    private void UpdateWater()
+    private void WaterSpread()
     {
         bool WaterSpread = true;
 
@@ -57,6 +79,7 @@ public class WaterManager : MonoBehaviour
                                 if (openingGrid[x,z] != null){
                                     SpawnWater(i, j);
                                     WaterSpread = true;
+                                    continue;
                                 }
                             }
                         }
@@ -69,18 +92,20 @@ public class WaterManager : MonoBehaviour
                                 if (openingGrid[x,z] != null){
                                     SpawnWater(i, j);
                                     WaterSpread = true;
+                                    continue;
                                 }
                             }
                         }
                         // tjek om øvre dør er åben (i-1, j)
                         if(i > 0){
                             if(WaterGrid[i - 1, j]){ 
-                                int x = (i) * 2;
+                                int x = i * 2;
                                 int z = j * 2 + 1;
                                 
                                 if (openingGrid[x,z] != null){
                                     SpawnWater(i, j);
                                     WaterSpread = true;
+                                    continue;
                                 }
                             }
                         }
@@ -92,28 +117,27 @@ public class WaterManager : MonoBehaviour
                                 if (openingGrid[x,z] != null){
                                     SpawnWater(i, j);
                                     WaterSpread = true;
+                                    continue;
                                 }
                             }
-                        }
-                            
+                        }    
                     }
                 }
             }
         }
-        
-         
-        /* for(int i = 0; i < unCheckedCoords.Count; i++)
-        {
-            int x = unCheckedCoords[i][0];
-            int z = unCheckedCoords[i][1];
-
-            Debug.Log(isWaterGrid[x, z]);
-            //Debug.Log(isWaterGrid[-1, -1]);
-        } */
     }
 
     private void SpawnWater(int i, int j){
         WaterGrid[i, j] = true;
-        Instantiate(waterPrefab, new Vector3(i * prefabSize, 0, j * prefabSize), quaternion.identity);
+        Vector3 waterPosition = new Vector3(i*prefabSize, WaterHeight, j*prefabSize);
+        GameObject waterSegment = Instantiate(waterPrefab, waterPosition, quaternion.identity);
+        WaterPlaced[i, j] = waterSegment;
+        OpenRoomCount +=1;
+        Debug.Log(OpenRoomCount);
+
+    }
+
+    private void UpdateWater(){
+
     }
 }
