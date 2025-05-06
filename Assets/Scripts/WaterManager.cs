@@ -26,8 +26,8 @@ public class WaterManager : MonoBehaviour
 
     private GameObject[,] WaterPlaced;
     private float OpenRoomCount = 0;
-
-    // private List<List<<int>> openRoomCoords = new List<List<int>>();
+    
+    List<List<int>> openRoomCoords = new List<List<int>>();
 
     void Start()
     {
@@ -136,12 +136,14 @@ public class WaterManager : MonoBehaviour
         GameObject waterSegment = Instantiate(waterPrefab, waterPosition, quaternion.identity);
         WaterPlaced[i, j] = waterSegment;
         Height[i,j] = -8.5f;
+        List<int> coords = [i,j];
         OpenRoomCount +=1;
     }
 
     private void UpdateWater()
     {
-
+        int i = 
+        if (Heigt)
     }
 
 }
