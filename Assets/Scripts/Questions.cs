@@ -1,6 +1,9 @@
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 
 public class QuestionPopupTrigger : MonoBehaviour
 {
@@ -12,14 +15,12 @@ public class QuestionPopupTrigger : MonoBehaviour
 
     private Collider triggerCollider;
 
-    [SerializeField] private float doorOpenHeight = 25f;
-    [SerializeField] private float doorOpenSpeed = 5f;
 
-    private bool isOpening = false;
-    private Vector3 doorTargetPosition;
+    public bool DoorShouldOpen = false;
+    public Vector3 DoorPosition;
 
     private void Update(){
-        
+
     }
     private void Awake()
     {
@@ -83,25 +84,11 @@ public class QuestionPopupTrigger : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        Vector3 DoorPosition = transform.parent.position;
-        OpenDoor(DoorPosition);
-        
-        doorTargetPosition = DoorPosition + Vector3.up * doorOpenHeight;
-        isOpening = true;
+        DoorShouldOpen = true;
+        DoorPosition = transform.parent.position;
+
 
         Debug.LogError($"✅ Question complete. Door unlocked.");
-    }
-
-    public void OpenDoor(Vector3 DoorPosition){
-        bool SlideDoor = true;
-        float StartPosition = DoorPosition.y;
-
-        while(SlideDoor){
-            DoorPosition.y +=2*Time.deltaTime;
-            if(DoorPosition.y > StartPosition+35){
-                SlideDoor = false;
-            }
-        }
     }
 }
  
