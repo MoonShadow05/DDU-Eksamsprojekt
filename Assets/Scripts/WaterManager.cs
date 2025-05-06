@@ -9,11 +9,9 @@ public class WaterManager : MonoBehaviour
 {
     [SerializeField] private GameObject waterPrefab;
 
-    private bool[,] isWaterGrid;
+    private bool[,] WaterGrid;
     private GameObject[,] openingGrid;
     private GameObject[,] doorGrid;
-
-    private List<List<int>> unCheckedCoords = new List<List<int>>();
 
     private int gridWidth;
     private int gridDepth;
@@ -23,7 +21,6 @@ public class WaterManager : MonoBehaviour
     [SerializeField] private WorldGenerator worldGeneration;
     void Start()
     {
-        //WorldGenerator worldGeneration = GetComponent<WorldGenerator>();
         gridWidth = worldGeneration._mazeWidth;
         gridDepth = worldGeneration._mazeDepth;
 
@@ -32,13 +29,10 @@ public class WaterManager : MonoBehaviour
 
         prefabSize = worldGeneration._prefabSize;
 
-        isWaterGrid = new bool[gridWidth, gridDepth];
+        WaterGrid = new bool[gridWidth, gridDepth];
 
-        /* List<int> coords = new List<int>{ 0, 0 };
-        unCheckedCoords.Add(coords); */
-        isWaterGrid[0, 0] = true;
+        WaterGrid[0, 0] = true;
         SpawnWater(0,0);
-
         UpdateWater();
     }
 
@@ -53,10 +47,10 @@ public class WaterManager : MonoBehaviour
 
             for(int i = 0; i < gridWidth; i++){
                 for(int j = 0 ; j < gridDepth ; j++){
-                    if(!isWaterGrid[i, j]){
+                    if(!WaterGrid[i, j]){
                         // tjek om venstre dør er åben (i, j-1)                        
                         if(j > 0){
-                            if(isWaterGrid[i, j - 1]){
+                            if(WaterGrid[i, j - 1]){
                                 int x = i * 2 + 1;
                                 int z = j * 2;
                                 
@@ -68,7 +62,7 @@ public class WaterManager : MonoBehaviour
                         }
                         // tjek om højre dør er åben (i, j+1)
                         if(j < gridDepth - 1){
-                            if(isWaterGrid[i, j + 1]){
+                            if(WaterGrid[i, j + 1]){
                                 int x = i * 2 + 1;
                                 int z = (j + 1) * 2;
                                 
@@ -80,7 +74,7 @@ public class WaterManager : MonoBehaviour
                         }
                         // tjek om øvre dør er åben (i-1, j)
                         if(i > 0){
-                            if(isWaterGrid[i - 1, j]){ 
+                            if(WaterGrid[i - 1, j]){ 
                                 int x = (i) * 2;
                                 int z = j * 2 + 1;
                                 
@@ -92,7 +86,7 @@ public class WaterManager : MonoBehaviour
                         }
                         // tjek om nedre dør er åben (i+1, j)
                         if(i < gridWidth - 1){
-                            if(isWaterGrid[i + 1, j]){
+                            if(WaterGrid[i + 1, j]){
                                 int x = (i + 1) * 2;
                                 int z = j * 2 + 1;
                                 if (openingGrid[x,z] != null){
@@ -101,7 +95,6 @@ public class WaterManager : MonoBehaviour
                                 }
                             }
                         }
-                        // Hvis en dør er åben sættes isWaterGrid[i,j] til true og vand tegnes
                             
                     }
                 }
@@ -120,7 +113,7 @@ public class WaterManager : MonoBehaviour
     }
 
     private void SpawnWater(int i, int j){
-        isWaterGrid[i, j] = true;
-        Instantiate(waterPrefab, new Vector3(i * 30, 0, j * 30), quaternion.identity);
+        WaterGrid[i, j] = true;
+        Instantiate(waterPrefab, new Vector3(i * prefabSize, 0, j * prefabSize), quaternion.identity);
     }
 }
