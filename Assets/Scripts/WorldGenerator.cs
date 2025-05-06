@@ -72,7 +72,7 @@ public class WorldGenerator : MonoBehaviour
         InstantiateOpeningsAndDoors(_openingPrefab, openings, _openingGrid);
         InstantiateOpeningsAndDoors(_doorPrefab, doors, _doorGrid);
 
-        //Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
+        // Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
