@@ -22,9 +22,11 @@ public class WaterManager : MonoBehaviour
     [SerializeField] private WorldGenerator worldGeneration;
 
     [SerializeField] private float waterFlowRate;
-    private float WaterHeight = -8.5f;
+    private float[,] Height;
+
     private GameObject[,] WaterPlaced;
     private float OpenRoomCount = 0;
+
     void Start()
     {
         gridWidth = worldGeneration._mazeWidth;
@@ -37,24 +39,23 @@ public class WaterManager : MonoBehaviour
 
         WaterGrid = new bool[gridWidth, gridDepth];
         WaterPlaced = new GameObject[gridWidth, gridDepth];
+        Height = new float[gridWidth,gridDepth];
 
         WaterGrid[0, 0] = true;
+        Height[0,0] = -8.5f;
         SpawnWater(0,0);
         WaterSpread();
-        UpdateWater();
     }
     void Update(){
-        WaterHeight += waterFlowRate/100*Time.deltaTime;
-        
         for(int i = 0; i < gridWidth; i++){
             for(int j = 0 ; j < gridDepth ; j++){
                 if(WaterGrid[i, j] && WaterPlaced[i,j]){
+                    Height[i,j] += waterFlowRate/100*Time.deltaTime;
                     Vector3 NewPos = WaterPlaced[i, j].transform.position;
-                    NewPos.y = WaterHeight;
+                    NewPos.y = Height[i,j];
                     WaterPlaced[i, j].transform.position = NewPos;
                 }
             }
-            
         }
     }
 
@@ -129,15 +130,12 @@ public class WaterManager : MonoBehaviour
 
     private void SpawnWater(int i, int j){
         WaterGrid[i, j] = true;
-        Vector3 waterPosition = new Vector3(i*prefabSize, WaterHeight, j*prefabSize);
+        Vector3 waterPosition = new Vector3(i*prefabSize, Height[i,j], j*prefabSize);
         GameObject waterSegment = Instantiate(waterPrefab, waterPosition, quaternion.identity);
         WaterPlaced[i, j] = waterSegment;
+        Height[i,j] = -8.5f;
         OpenRoomCount +=1;
-        Debug.Log(OpenRoomCount);
 
     }
 
-    private void UpdateWater(){
-
-    }
 }

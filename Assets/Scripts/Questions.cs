@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestionPopupTrigger : MonoBehaviour
@@ -10,6 +12,15 @@ public class QuestionPopupTrigger : MonoBehaviour
 
     private Collider triggerCollider;
 
+    [SerializeField] private float doorOpenHeight = 25f;
+    [SerializeField] private float doorOpenSpeed = 5f;
+
+    private bool isOpening = false;
+    private Vector3 doorTargetPosition;
+
+    private void Update(){
+        
+    }
     private void Awake()
     {
         triggerCollider = GetComponent<Collider>();
@@ -72,7 +83,25 @@ public class QuestionPopupTrigger : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        Vector3 DoorPosition = transform.parent.position;
+        OpenDoor(DoorPosition);
+        
+        doorTargetPosition = DoorPosition + Vector3.up * doorOpenHeight;
+        isOpening = true;
+
         Debug.LogError($"✅ Question complete. Door unlocked.");
+    }
+
+    public void OpenDoor(Vector3 DoorPosition){
+        bool SlideDoor = true;
+        float StartPosition = DoorPosition.y;
+
+        while(SlideDoor){
+            DoorPosition.y +=2*Time.deltaTime;
+            if(DoorPosition.y > StartPosition+35){
+                SlideDoor = false;
+            }
+        }
     }
 }
  
