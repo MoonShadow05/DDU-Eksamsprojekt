@@ -17,16 +17,49 @@ public class Exercises : MonoBehaviour
     [System.Serializable]
     public class Exercise
     {
-        public string title;
         public string question;
         public string correctAnswer;
         public string[] options;
+
+        public int level; // 0 = Easy, 1 = Medium, 2 = Hard
+    }
+
+
+    
+    public void GenerateQuestions()
+    {
+        // This method is for generating questions in the inspector.
+        // You can add your own questions here or load them from a file.
+        // For now, it's empty.
+
+        // Example question:
+        easyQuestions.Add(
+            new Exercise { question = "Hvad er 2+2?", correctAnswer = "4", options = new string[] { "3", "4", "5" }, level = 0 });
+        easyQuestions.Add(
+            new Exercise { question = "Hvad er 3+5?", correctAnswer = "8", options = new string[] { "7", "8", "9" }, level = 0 });
+        easyQuestions.Add(
+            new Exercise { question = "Hvad er 5-2?", correctAnswer = "3", options = new string[] { "1", "2", "3" }, level = 0 });
+
+        mediumQuestions.Add(
+            new Exercise { question = "Hvad er 10*2?", correctAnswer = "20", options = new string[] { "15", "20", "25" }, level = 1 });
+        mediumQuestions.Add(
+            new Exercise { question = "Hvad er 15/3?", correctAnswer = "5", options = new string[] { "4", "5", "6" }, level = 1 });
+        mediumQuestions.Add(
+            new Exercise { question = "Hvad er 12-4?", correctAnswer = "8", options = new string[] { "6", "7", "8" }, level = 1 });
+        
+        hardQuestions.Add(
+            new Exercise { question = "Hvad er 2^3?", correctAnswer = "8", options = new string[] { "6", "7", "8" }, level = 2 });
+        hardQuestions.Add(
+            new Exercise { question = "Hvad er kvadratroden af 16?", correctAnswer = "4", options = new string[] { "3", "4", "5" }, level = 2 });
+        hardQuestions.Add(
+            new Exercise { question = "Hvad er 5*5?", correctAnswer = "25", options = new string[] { "20", "25", "30" }, level = 2 }); 
+
     }
 
     [Header("Difficulty Lists")]
-    public List<Exercise> easyQuestions = new List<Exercise>();
-    public List<Exercise> mediumQuestions = new List<Exercise>();
-    public List<Exercise> hardQuestions = new List<Exercise>();
+    public List<Exercise> easyQuestions;
+    public List<Exercise> mediumQuestions;
+    public List<Exercise> hardQuestions;
 
     public enum Difficulty { Easy, Medium, Hard }
 
@@ -71,5 +104,11 @@ public class Exercises : MonoBehaviour
             int rnd = Random.Range(0, i + 1);
             (list[i], list[rnd]) = (list[rnd], list[i]);
         }
+    }
+
+    public void Start()
+    {
+        GenerateQuestions();
+        Debug.Log("Questions generated.");
     }
 }
