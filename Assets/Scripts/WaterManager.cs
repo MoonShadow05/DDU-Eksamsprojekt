@@ -27,6 +27,8 @@ public class WaterManager : MonoBehaviour
     private GameObject[,] WaterPlaced;
     private float OpenRoomCount = 0;
 
+    // private List<List<<int>> openRoomCoords = new List<List<int>>();
+
     void Start()
     {
         gridWidth = worldGeneration._mazeWidth;
@@ -135,6 +137,10 @@ public class WaterManager : MonoBehaviour
         WaterPlaced[i, j] = waterSegment;
         Height[i,j] = -8.5f;
         OpenRoomCount +=1;
+    }
+
+    private void UpdateWater()
+    {
 
     }
 

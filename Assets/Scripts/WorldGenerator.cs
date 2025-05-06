@@ -270,17 +270,24 @@ public class WorldGenerator : MonoBehaviour
             int x = coordsList[i][0];
             int z = coordsList[i][1];
 
+            float yPos;
+            if (prefab = _doorPrefab)
+            {
+                yPos = 2;
+            } else
+            {
+                yPos = 0;
+            }
+
             if (x % 2 == 1)
             {
                 float xPos = (x - 1) * _prefabSize / 2;
-                float yPos = 0;
                 float zPos = (z - 1) * _prefabSize / 2;
 
                 grid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.Euler(0, 90, 0));
             } else
             {
                 float xPos = (x - 1) * _prefabSize / 2;;
-                float yPos = 0;
                 float zPos = (z - 1) * _prefabSize / 2;
 
                 grid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
