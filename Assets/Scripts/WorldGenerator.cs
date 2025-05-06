@@ -69,8 +69,8 @@ public class WorldGenerator : MonoBehaviour
         _openingGrid = new GameObject[_mazeWidth * 2, _mazeDepth * 2];
         _doorGrid = new GameObject[_mazeWidth * 2, _mazeDepth * 2];
 
-        InstantiateOpeningsDoors(_openingPrefab, openings, _openingGrid);
-        InstantiateOpeningsDoors(_doorPrefab, doors, _doorGrid);
+        InstantiateOpeningsAndDoors(_openingPrefab, openings, _openingGrid);
+        InstantiateOpeningsAndDoors(_doorPrefab, doors, _doorGrid);
 
         //Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
     }
@@ -263,7 +263,7 @@ public class WorldGenerator : MonoBehaviour
         }
     }
     
-    private void InstantiateOpeningsDoors(GameObject prefab, List<List<int>> coordsList, GameObject[,] grid)
+    private void InstantiateOpeningsAndDoors(GameObject prefab, List<List<int>> coordsList, GameObject[,] grid)
     {
         for (int i = 0;i < coordsList.Count;i++)
         {
