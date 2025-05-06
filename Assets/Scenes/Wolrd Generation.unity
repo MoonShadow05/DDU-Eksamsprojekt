@@ -202,6 +202,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterPrefab: {fileID: 5907322198663239626, guid: 493900e83d6601d4f9d48141d6dc1f54, type: 3}
   worldGeneration: {fileID: 386464663}
+  waterStartHeight: -8.75
+  startWaterAmount: 0.25
   waterFlowRate: 5
 --- !u!4 &694932674
 Transform:

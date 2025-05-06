@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using Unity.Collections;
 using System;
+using UnityEngine.Rendering;
 
 public class WaterManager : MonoBehaviour
 {
@@ -21,16 +22,23 @@ public class WaterManager : MonoBehaviour
     
     [SerializeField] private WorldGenerator worldGeneration;
 
+    //[SerializeField] private float preferredHeight;
+    //[SerializeField] private float prefferedHeightIncrease;
+    [SerializeField] private float waterStartHeight;
+    [SerializeField] private float startWaterAmount;
     [SerializeField] private float waterFlowRate;
+    private float totalWaterAmount;
     private float[,] Height;
 
     private GameObject[,] WaterPlaced;
-    private float OpenRoomCount = 0;
     
     List<List<int>> openRoomCoords = new List<List<int>>();
 
     void Start()
     {
+        totalWaterAmount = startWaterAmount;
+        waterFlowRate = waterFlowRate / 100 * Time.deltaTime;
+
         gridWidth = worldGeneration._mazeWidth;
         gridDepth = worldGeneration._mazeDepth;
 
@@ -49,16 +57,7 @@ public class WaterManager : MonoBehaviour
         WaterSpread();
     }
     void Update(){
-        for(int i = 0; i < gridWidth; i++){
-            for(int j = 0 ; j < gridDepth ; j++){
-                if(WaterGrid[i, j] && WaterPlaced[i,j]){
-                    Height[i,j] += waterFlowRate/100*Time.deltaTime;
-                    Vector3 NewPos = WaterPlaced[i, j].transform.position;
-                    NewPos.y = Height[i,j];
-                    WaterPlaced[i, j].transform.position = NewPos;
-                }
-            }
-        }
+        UpdateWater();
     }
 
     // Funtionen tjekker for hver felt i gridet om der er plads
@@ -135,15 +134,60 @@ public class WaterManager : MonoBehaviour
         Vector3 waterPosition = new Vector3(i*prefabSize, Height[i,j], j*prefabSize);
         GameObject waterSegment = Instantiate(waterPrefab, waterPosition, quaternion.identity);
         WaterPlaced[i, j] = waterSegment;
-        Height[i,j] = -8.5f;
-        List<int> coords = [i,j];
-        OpenRoomCount +=1;
+        List<int> roomCoords = new List<int> { i, j };
+        openRoomCoords.Add(roomCoords);
     }
 
     private void UpdateWater()
     {
-        int i = 
-        if (Heigt)
+        // Totatle vandmængde stiger med dette
+        int roomAmount = openRoomCoords.Count;
+        totalWaterAmount += waterFlowRate * roomAmount;
+
+        for (int roomNumb = 0; roomNumb < roomAmount; roomNumb++)
+        {
+            // Koordinater til rum
+            int i = openRoomCoords[roomNumb][0];
+            int j = openRoomCoords[roomNumb][1];
+
+            Height[i, j] = waterStartHeight + totalWaterAmount / roomAmount;
+
+            // Placer højere op
+            Vector3 NewPos = WaterPlaced[i, j].transform.position;
+            NewPos.y = Height[i, j];
+            WaterPlaced[i, j].transform.position = NewPos;
+        }
+
+
+        /*
+        for (int roomNumb = 0; roomNumb < openRoomCoords.Count; roomNumb++)
+        {
+            int i = openRoomCoords[roomNumb][0];
+            int j = openRoomCoords[roomNumb][1];
+
+            preferredHeight += (prefferedHeightIncrease / 100 * Time.deltaTime);
+            float currentHeight = Height[i, j];
+
+            if (preferredHeight > currentHeight)
+            {
+                Height[i, j] = currentHeight + (waterFlowRate / 100 * Time.deltaTime);
+                if (Height[i, j] > preferredHeight)
+                {
+                    Height[i, j] = preferredHeight;
+                }
+            } else if (preferredHeight < currentHeight) {
+                Height[i, j] = currentHeight - (waterFlowRate / 100 * Time.deltaTime);
+                if (Height[i, j] < preferredHeight)
+                {
+                    Height[i, j] = preferredHeight;
+                }
+            }
+
+            Vector3 NewPos = WaterPlaced[i, j].transform.position;
+            NewPos.y = Height[i, j];
+            WaterPlaced[i, j].transform.position = NewPos;
+        }*/
+
     }
 
 }
