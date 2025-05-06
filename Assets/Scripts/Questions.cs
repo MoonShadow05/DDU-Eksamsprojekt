@@ -2,56 +2,77 @@ using UnityEngine;
 
 public class QuestionPopupTrigger : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private GameObject popupPanel;
-    [SerializeField] private MonoBehaviour cameraControlScript; // e.g., your mouse/camera script
+    [SerializeField] private Exercises exercises;
+    [SerializeField] private MonoBehaviour cameraScript;
+    [SerializeField] private Collider doorBlockerCollider;
 
-    private void Start()
+    private Collider triggerCollider;
+
+    private void Awake()
     {
-        if (popupPanel != null)
-            popupPanel.SetActive(false);
+        triggerCollider = GetComponent<Collider>();
+        popupPanel.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && popupPanel != null)
-        {
-            popupPanel.SetActive(true);
-            if (cameraControlScript != null)
-                cameraControlScript.enabled = false;
+        if (!other.CompareTag("Player")) return;
 
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+        popupPanel.SetActive(true);
+        exercises.LoadRandomQuestion(this);
 
-            Debug.Log("Popup shown and camera locked.");
-        }
+        if (cameraScript != null) cameraScript.enabled = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Debug.Log("Entered question zone");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && popupPanel != null)
-        {
-            popupPanel.SetActive(false);
-            if (cameraControlScript != null)
-                cameraControlScript.enabled = true;
+        if (!other.CompareTag("Player")) return;
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+        popupPanel.SetActive(false);
 
-            Debug.Log("Popup hidden and camera unlocked.");
-        }
-    }
-
-
-    public void CompleteQuestion()
-    {
-        if (cameraControlScript != null)
-            cameraControlScript.enabled = true;
+        if (cameraScript != null) cameraScript.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        popupPanel.SetActive(false);
-        Debug.LogError($"Question '{popupPanel.name}' completed!");
+        Debug.Log("Exited question zone");
     }
 
+    public void CheckAnswer(string selectedAnswer)
+    {
+        if (selectedAnswer == exercises.correctAnswer)
+        {
+            Debug.Log("✅ Correct!");
+            CompleteQuestion(); 
+        }
+        else
+        {
+            Debug.Log("❌ Wrong answer.");
+        }
+    }
+
+    private void CompleteQuestion()
+    {
+        popupPanel.SetActive(false);
+        triggerCollider.enabled = false;
+
+        if (doorBlockerCollider != null)
+            doorBlockerCollider.enabled = false;
+
+        if (cameraScript != null)
+            cameraScript.enabled = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        Debug.LogError($"✅ Question complete. Door unlocked.");
+    }
 }
+ 
