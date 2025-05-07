@@ -27,8 +27,35 @@ public class QuestionPopupTrigger : MonoBehaviour
     private void Awake()
     {
         triggerCollider = GetComponent<Collider>();
-        popupPanel.SetActive(false);
+
+        // Assign WaterManager if not set
+        if (WaterManager == null)
+            WaterManager = FindObjectOfType<WaterManager>();
+
+        // Assign Popup Panel (you can also use a tag or name here)
+        if (popupPanel == null)
+            popupPanel = GameObject.Find("PopupMenu"); // Adjust name if needed
+
+        // Assign Exercises script
+        if (exercises == null)
+            exercises = FindObjectOfType<Exercises>();
+
+        // Assign Camera Script (assumes it's on main camera or tagged object)
+        if (cameraScript == null)
+        {
+            var camObj = Camera.main != null ? Camera.main.gameObject : GameObject.FindWithTag("MainCamera");
+            if (camObj != null)
+                cameraScript = camObj.GetComponent<MonoBehaviour>(); // Replace with specific type if you know it
+        }
+
+        // Assign Door Blocker Collider (e.g. find by tag or name if needed)
+        if (doorBlockerCollider == null)
+            doorBlockerCollider = GameObject.Find("DoorColider")?.GetComponent<Collider>();
+
+        if (popupPanel != null)
+            popupPanel.SetActive(false);
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
