@@ -175,7 +175,8 @@ public class WaterManager : MonoBehaviour
     {
         // Totatle vandmængde stiger med dette
         int roomAmount = openRoomCoords.Count;
-        totalWaterAmount += waterIncreaseRate * Time.deltaTime * roomAmount; // Den totale vandmængde stigning
+        float waterIncrease = waterIncreaseRate * Time.deltaTime * roomAmount;
+        totalWaterAmount += waterIncrease; // Den totale vandmængde stigning
 
         for (int roomNumb = 0; roomNumb < roomAmount; roomNumb++){ // Vandhøjden bliver opdateret for alle rum med vand
             // Koordinater til rum
@@ -201,7 +202,7 @@ public class WaterManager : MonoBehaviour
                 {
                     int deltaRoomAmount = roomAmount - oldRoomAmount;
                     float waterFallSpeeed = ((doorSpeed * deltaRoomAmount) / oldRoomAmount) * Time.deltaTime;
-                    Height[i, j] = currentRoomWaterHeight - waterFallSpeeed;
+                    Height[i, j] = currentRoomWaterHeight - waterFallSpeeed + waterIncrease;
 
                     if (Height[i, j] < waterHeightTarget)
                     {
@@ -211,6 +212,7 @@ public class WaterManager : MonoBehaviour
                 } else // Hvis vandet er af en anden grund for højt, vil det falde alligevel.
                 {
                     float waterFallSpeeed = doorSpeed * Time.deltaTime;
+                    Height[i, j] = currentRoomWaterHeight - waterFallSpeeed + waterIncrease;
                     if (Height[i, j] < waterHeightTarget)
                     {
                         Height[i, j] = waterHeightTarget;
@@ -223,37 +225,5 @@ public class WaterManager : MonoBehaviour
             NewPos.y = Height[i, j];
             WaterPlaced[i, j].transform.position = NewPos;
         }
-
-
-        /*
-        for (int roomNumb = 0; roomNumb < openRoomCoords.Count; roomNumb++)
-        {
-            int i = openRoomCoords[roomNumb][0];
-            int j = openRoomCoords[roomNumb][1];
-
-            preferredHeight += (prefferedHeightIncrease / 100 * Time.deltaTime);
-            float currentHeight = Height[i, j];
-
-            if (preferredHeight > currentHeight)
-            {
-                Height[i, j] = currentHeight + (waterFlowRate * Time.deltaTime);
-                if (Height[i, j] > preferredHeight)
-                {
-                    Height[i, j] = preferredHeight;
-                }
-            } else if (preferredHeight < currentHeight) {
-                Height[i, j] = currentHeight - (waterFlowRate * Time.deltaTime);
-                if (Height[i, j] < preferredHeight)
-                {
-                    Height[i, j] = preferredHeight;
-                }
-            }
-
-            Vector3 NewPos = WaterPlaced[i, j].transform.position;
-            NewPos.y = Height[i, j];
-            WaterPlaced[i, j].transform.position = NewPos;
-        }*/
-
     }
-
 }
