@@ -272,7 +272,7 @@ public class WorldGenerator : MonoBehaviour
             int z = coordsList[i][1];
 
             float yPos;
-            if (prefab = _doorPrefab)
+            if (prefab == _doorPrefab)
             {
                 yPos = 2;
             } else
