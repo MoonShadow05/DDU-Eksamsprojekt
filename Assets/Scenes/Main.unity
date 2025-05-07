@@ -283,7 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mazeCellPrefab: {fileID: 2306555772913984916, guid: 8d6044530d18bfc46a240e34bf20a332, type: 3}
   _openingPrefab: {fileID: 8524794194308890934, guid: 8d418ef94bd785249b3d102faf6a602e, type: 3}
-  _doorPrefab: {fileID: 1497155065387497228, guid: 18c3572e1f3a0f04ab5bbb400bb33e27, type: 3}
+  _doorPrefab: {fileID: 5735758874266245303, guid: 0292ea2d1a3600a4790304c961a70b65, type: 3}
   _mazeWidth: 6
   _mazeDepth: 6
   _extraWallBreakPercentage: 20
@@ -999,7 +999,7 @@ GameObject:
   - component: {fileID: 803246707}
   m_Layer: 5
   m_Name: ButtonGroup
-  m_TagString: Untagged
+  m_TagString: Options
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

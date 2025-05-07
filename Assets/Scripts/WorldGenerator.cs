@@ -6,94 +6,94 @@ using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using UnityEngine.InputSystem;
 
-public class WorldGenerator : MonoBehaviour
-{
-    [SerializeField]
-    private MazeCell _mazeCellPrefab;
-
-    [SerializeField]
-    private GameObject _openingPrefab;
-
-    [SerializeField]
-    private GameObject _doorPrefab;
-
-    [SerializeField]
-    public int _mazeWidth;
-
-    [SerializeField]
-    public int _mazeDepth;
-    
-    [SerializeField]
-    private float _extraWallBreakPercentage;
-
-    [SerializeField]
-    private float _doorAmountPercentage;
-
-    private MazeCell[,] _mazeGrid;
-    public GameObject[,] _openingGrid;
-    public GameObject[,] _doorGrid;
-
-    [HideInInspector]
-    public int _prefabSize = 30;
-
-    List<List<int>> walls = new List<List<int>>();
-    List<List<int>> openings = new List<List<int>>();
-    List<List<int>> doors = new List<List<int>>();
-
-    void Start()
+    public class WorldGenerator : MonoBehaviour
     {
-        _mazeGrid = new MazeCell[_mazeWidth, _mazeDepth];
+        [SerializeField]
+        private MazeCell _mazeCellPrefab;
 
-        for (int x = 0; x < _mazeWidth; x++)
+        [SerializeField]
+        private GameObject _openingPrefab;
+
+        [SerializeField]
+        private GameObject _doorPrefab;
+
+        [SerializeField]
+        public int _mazeWidth;
+
+        [SerializeField]
+        public int _mazeDepth;
+        
+        [SerializeField]
+        private float _extraWallBreakPercentage;
+
+        [SerializeField]
+        private float _doorAmountPercentage;
+
+        private MazeCell[,] _mazeGrid;
+        public GameObject[,] _openingGrid;
+        public GameObject[,] _doorGrid;
+
+        [HideInInspector]
+        public int _prefabSize = 30;
+
+        List<List<int>> walls = new List<List<int>>();
+        List<List<int>> openings = new List<List<int>>();
+        List<List<int>> doors = new List<List<int>>();
+
+        void Start()
         {
-            for (int z = 0; z < _mazeDepth; z++)
+            _mazeGrid = new MazeCell[_mazeWidth, _mazeDepth];
+
+            for (int x = 0; x < _mazeWidth; x++)
             {
-                _mazeGrid[x,z] = Instantiate(_mazeCellPrefab, new Vector3(x * _prefabSize, 0, z * _prefabSize), Quaternion.identity);
-
-                if (z != 0)
+                for (int z = 0; z < _mazeDepth; z++)
                 {
-                    walls.Add(new List<int> { x * 2 + 1, z * 2 }); // Back Wall
-                }
+                    _mazeGrid[x,z] = Instantiate(_mazeCellPrefab, new Vector3(x * _prefabSize, 0, z * _prefabSize), Quaternion.identity);
 
-                if (x != 0)
-                {
-                    walls.Add(new List<int> { x * 2 , z * 2 + 1 }); // Left Wall
+                    if (z != 0)
+                    {
+                        walls.Add(new List<int> { x * 2 + 1, z * 2 }); // Back Wall
+                    }
+
+                    if (x != 0)
+                    {
+                        walls.Add(new List<int> { x * 2 , z * 2 + 1 }); // Left Wall
+                    }
                 }
             }
+
+            GenerateMaze(null, _mazeGrid[0, 0]);
+
+            RemoveExtraCellWalls();
+
+            ReplaceOpeningsWithDoors();
+
+            _openingGrid = new GameObject[_mazeWidth * 2, _mazeDepth * 2];
+            _doorGrid = new GameObject[_mazeWidth * 2, _mazeDepth * 2];
+
+            InstantiateOpeningsAndDoors(_openingPrefab, openings, _openingGrid);
+            InstantiateOpeningsAndDoors(_doorPrefab, doors, _doorGrid);
+
+            // Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
         }
 
-        GenerateMaze(null, _mazeGrid[0, 0]);
-
-        RemoveExtraCellWalls();
-
-        ReplaceOpeningsWithDoors();
-
-        _openingGrid = new GameObject[_mazeWidth * 2, _mazeDepth * 2];
-        _doorGrid = new GameObject[_mazeWidth * 2, _mazeDepth * 2];
-
-        InstantiateOpeningsAndDoors(_openingPrefab, openings, _openingGrid);
-        InstantiateOpeningsAndDoors(_doorPrefab, doors, _doorGrid);
-
-        // Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
-    }
-
-    private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
-    {
-        currentCell.Visit();
-        ClearWalls(previousCell, currentCell);
-
-        MazeCell nextCell;
-
-        do
+        private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
         {
-            nextCell = GetNextUnvisitedCell(currentCell);
+            currentCell.Visit();
+            ClearWalls(previousCell, currentCell);
 
-            if (nextCell != null)
+            MazeCell nextCell;
+
+            do
             {
-                GenerateMaze(currentCell, nextCell);
-            }
-        } while (nextCell != null);
-    }
+                nextCell = GetNextUnvisitedCell(currentCell);
+
+                if (nextCell != null)
+                {
+                    GenerateMaze(currentCell, nextCell);
+                }
+            } while (nextCell != null);
+        }
 
     private MazeCell GetNextUnvisitedCell(MazeCell currentCell)
     {

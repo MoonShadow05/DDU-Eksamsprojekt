@@ -25,7 +25,39 @@ public class Exercises : MonoBehaviour
     }
 
 
+    private void Awake()
+{
+    var HUD = GameObject.Find("HUD");
+
+    if (HUD != null)
+    {
+        // Find question text
+        if (questionText == null)
+        {
+            var questionObj = HUD.transform.Find("PopupMenu/Question");
+            if (questionObj != null)
+                questionText = questionObj.GetComponent<TMP_Text>();
+        }
+
+        // Find buttons under ButtonGroup
+        var buttonGroup = HUD.transform.Find("PopupMenu/ButtonGroup");
+        Debug.Log($"ButtonGroup found: {buttonGroup != null}");
+        if (buttonGroup != null)
+        {
+            Button[] found = buttonGroup.GetComponentsInChildren<Button>();
+            Debug.Log(buttonGroup.childCount);
+            answerButtons = found;
+            Debug.Log($"✅ Found {answerButtons.Length} buttons under ButtonGroup.");
+        }
+        else
+        {
+            Debug.LogWarning("❌ ButtonGroup not found under PopupMenu.");
+        }
     
+    }
+}
+
+
     public void GenerateQuestions()
     {
         // This method is for generating questions in the inspector.
@@ -84,6 +116,12 @@ public class Exercises : MonoBehaviour
 
         List<string> shuffled = new List<string>(exercise.options);
         ShuffleList(shuffled);
+
+        if (answerButtons.Length < shuffled.Count)
+        {
+            Debug.LogError("Number of answer buttons does not match number of options.");
+            return;
+        }
 
         for (int i = 0; i < answerButtons.Length; i++)
         {

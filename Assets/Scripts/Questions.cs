@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Linq;
 
+
 public class QuestionPopupTrigger : MonoBehaviour
 {
     [SerializeField] private WaterManager WaterManager;
@@ -31,7 +32,7 @@ public class QuestionPopupTrigger : MonoBehaviour
         // Assign Popup Panel (you can also use a tag or name here)
        if (popupPanel == null)
         {
-            var hud = GameObject.Find("Hud");
+            var hud = GameObject.Find("HUD");
             if (hud != null)
             {
                 popupPanel = hud.GetComponentsInChildren<Transform>(true)
