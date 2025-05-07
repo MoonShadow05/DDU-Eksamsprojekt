@@ -7,6 +7,8 @@ using Unity.Collections;
 using System;
 using UnityEngine.Rendering;
 using UnityEngine.ProBuilder.Shapes;
+using System.IO.Compression;
+using UnityEngine.UIElements;
 
 public class WaterManager : MonoBehaviour
 {
@@ -33,16 +35,17 @@ public class WaterManager : MonoBehaviour
     private float[,] Height;
 
     private GameObject[,] WaterPlaced;
-
-    public bool DoorShouldOpen;
-    public Vector3 DoorPosition;
     
     List<List<int>> openRoomCoords = new List<List<int>>();
+
+    List<GameObject> movingDoors = new List<GameObject>();
+    //List<GameObject> movedDoors = new List<GameObject>();
+    private int movedDoors = 0;
 
     public float doorSpeed;
 
     public float doorTargetHeight; 
-
+    
     void Start(){
         totalWaterAmount = startWaterAmount;
         waterFlowRate = waterFlowRate / 100;
@@ -55,8 +58,6 @@ public class WaterManager : MonoBehaviour
 
         prefabSize = worldGeneration._prefabSize;
 
-        DoorShouldOpen = questions.DoorShouldOpen;
-        DoorPosition = questions.DoorPosition;
 
         WaterGrid = new bool[gridWidth, gridDepth];
         WaterPlaced = new GameObject[gridWidth, gridDepth];
@@ -67,16 +68,32 @@ public class WaterManager : MonoBehaviour
         SpawnWater(0,0);
         WaterSpread();
     }
+    
     void Update(){
+        foreach (GameObject Door in movingDoors) {
+            Door.transform.position += new Vector3(0,doorSpeed*Time.deltaTime,0);
+            Debug.Log("Rykket");
+            if (Door.transform.position.y >= doorTargetHeight) {
+                Door.transform.position = new Vector3(Door.transform.position.x,doorTargetHeight,Door.transform.position.z);
+                movedDoors++;
+                Debug.Log("Fjernet fra liste");
+            }
+        }
+
+        for (int i = 0; i < movedDoors; i++) {
+            movingDoors.RemoveAt(0);
+            movedDoors--;
+        }
+
+
         UpdateWater();
-        OpenDoor(DoorShouldOpen, DoorPosition);
     }
 
-    public void OpenDoor(bool DoorShouldOpen, Vector3 DoorPosition){
-        if (DoorShouldOpen == true && DoorPosition != null){
-            if(DoorPosition.y < doorTargetHeight){
-                DoorPosition.y += doorSpeed * Time.deltaTime;
-            }
+    public void OpenDoor(bool DoorShouldOpen, GameObject Door){
+        Debug.Log("Funktion køres");
+        if (DoorShouldOpen == true && Door != null) {
+            movingDoors.Add(Door);
+            Debug.Log("Added til liste");
         }
     }
 

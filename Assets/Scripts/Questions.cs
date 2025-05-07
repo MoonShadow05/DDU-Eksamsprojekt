@@ -7,6 +7,8 @@ using UnityEngine.ProBuilder.Shapes;
 
 public class QuestionPopupTrigger : MonoBehaviour
 {
+    [SerializeField] private WaterManager WaterManager;
+
     [Header("References")]
     [SerializeField] private GameObject popupPanel;
     [SerializeField] private Exercises exercises;
@@ -16,8 +18,8 @@ public class QuestionPopupTrigger : MonoBehaviour
     private Collider triggerCollider;
 
 
-    public bool DoorShouldOpen = false;
-    public Vector3 DoorPosition;
+    private bool DoorShouldOpen = false;
+    private GameObject DoorPosition;
 
     private void Update(){
 
@@ -63,6 +65,7 @@ public class QuestionPopupTrigger : MonoBehaviour
         {
             Debug.Log("✅ Correct!");
             CompleteQuestion(); 
+
         }
         else
         {
@@ -85,7 +88,8 @@ public class QuestionPopupTrigger : MonoBehaviour
         Cursor.visible = false;
 
         DoorShouldOpen = true;
-        DoorPosition = transform.parent.position;
+        DoorPosition = transform.parent.gameObject;
+        WaterManager.OpenDoor(DoorShouldOpen, DoorPosition);
 
 
         Debug.LogError($"✅ Question complete. Door unlocked.");
