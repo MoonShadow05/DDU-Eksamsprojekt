@@ -283,7 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mazeCellPrefab: {fileID: 2306555772913984916, guid: 8d6044530d18bfc46a240e34bf20a332, type: 3}
   _openingPrefab: {fileID: 8524794194308890934, guid: 8d418ef94bd785249b3d102faf6a602e, type: 3}
-  _doorPrefab: {fileID: 5845543767018961014, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
+  _doorPrefab: {fileID: 1497155065387497228, guid: 18c3572e1f3a0f04ab5bbb400bb33e27, type: 3}
   _mazeWidth: 6
   _mazeDepth: 6
   _extraWallBreakPercentage: 20
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 160783347}
   m_Layer: 5
   m_Name: PopupMenu
-  m_TagString: Untagged
+  m_TagString: PopUpMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1796,106 +1796,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703153993}
   m_CullTransparentMesh: 1
---- !u!114 &2036570615 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 321149291346116750, guid: 283d593628c64bc4798f87d8f93525a7, type: 3}
-  m_PrefabInstance: {fileID: 7322078734253587508}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82273c9864d19a44497f85762a11e1b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1001 &319376046888641869
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2051751376301399650, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5395439302225168618, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: questionText
-      value: 
-      objectReference: {fileID: 1703153995}
-    - target: {fileID: 5395439302225168618, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: 'answerButtons.Array.data[0]'
-      value: 
-      objectReference: {fileID: 576664912}
-    - target: {fileID: 5395439302225168618, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: 'answerButtons.Array.data[1]'
-      value: 
-      objectReference: {fileID: 74045694}
-    - target: {fileID: 5395439302225168618, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: 'answerButtons.Array.data[2]'
-      value: 
-      objectReference: {fileID: 179060640}
-    - target: {fileID: 5845543767018961014, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_Name
-      value: Door 1 + hitbox
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845543767018961014, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8181918185422205843, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: popupPanel
-      value: 
-      objectReference: {fileID: 160783345}
-    - target: {fileID: 8181918185422205843, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: WaterManager
-      value: 
-      objectReference: {fileID: 446584319}
-    - target: {fileID: 8181918185422205843, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
-      propertyPath: cameraScript
-      value: 
-      objectReference: {fileID: 2036570615}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6f6a2ad4d17b8ab4daa357cf30adbfc3, type: 3}
 --- !u!1001 &7322078734253587508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1992,4 +1892,3 @@ SceneRoots:
   - {fileID: 446584320}
   - {fileID: 576242975}
   - {fileID: 1260495951}
-  - {fileID: 319376046888641869}

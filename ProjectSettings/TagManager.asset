@@ -8,6 +8,7 @@ TagManager:
   - Option 2
   - Option 3
   - Question
+  - PopUpMenu
   layers:
   - Default
   - TransparentFX

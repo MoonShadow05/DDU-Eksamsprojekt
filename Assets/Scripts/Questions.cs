@@ -1,9 +1,5 @@
-using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
-using Unity.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
+using System.Linq;
 
 public class QuestionPopupTrigger : MonoBehaviour
 {
@@ -30,15 +26,27 @@ public class QuestionPopupTrigger : MonoBehaviour
 
         // Assign WaterManager if not set
         if (WaterManager == null)
-            WaterManager = FindObjectOfType<WaterManager>();
+            WaterManager = FindFirstObjectByType<WaterManager>();
 
         // Assign Popup Panel (you can also use a tag or name here)
-        if (popupPanel == null)
-            popupPanel = GameObject.Find("PopupMenu"); // Adjust name if needed
+       if (popupPanel == null)
+        {
+            var hud = GameObject.Find("Hud");
+            if (hud != null)
+            {
+                popupPanel = hud.GetComponentsInChildren<Transform>(true)
+                                .FirstOrDefault(t => t.name == "PopupMenu")?.gameObject;
+
+                Debug.Log($"Popup Panel Found: {popupPanel != null}");
+
+            }
+        }
+
+
 
         // Assign Exercises script
         if (exercises == null)
-            exercises = FindObjectOfType<Exercises>();
+            exercises = FindFirstObjectByType<Exercises>();
 
         // Assign Camera Script (assumes it's on main camera or tagged object)
         if (cameraScript == null)

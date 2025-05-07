@@ -109,6 +109,6 @@ public class Exercises : MonoBehaviour
     public void Start()
     {
         GenerateQuestions();
-        Debug.Log("Questions generated.");
+        /* Debug.Log("Questions generated."); */
     }
 }
