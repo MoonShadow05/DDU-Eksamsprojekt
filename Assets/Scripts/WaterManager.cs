@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using Unity.Collections;
 using System;
 using UnityEngine.Rendering;
+using UnityEngine.ProBuilder.Shapes;
 
 public class WaterManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class WaterManager : MonoBehaviour
     private int prefabSize;
     
     [SerializeField] private WorldGenerator worldGeneration;
+    [SerializeField] private QuestionPopupTrigger questions;
 
     //[SerializeField] private float preferredHeight;
     //[SerializeField] private float prefferedHeightIncrease;
@@ -31,14 +33,20 @@ public class WaterManager : MonoBehaviour
     private float[,] Height;
 
     private GameObject[,] WaterPlaced;
+
+    public bool DoorShouldOpen;
+    public Vector3 DoorPosition;
     
     List<List<int>> openRoomCoords = new List<List<int>>();
 
-    void Start()
-    {
-        totalWaterAmount = startWaterAmount;
-        waterFlowRate = waterFlowRate / 100 * Time.deltaTime;
+    public float doorSpeed;
 
+    public float doorTargetHeight; 
+
+    void Start(){
+        totalWaterAmount = startWaterAmount;
+        waterFlowRate = waterFlowRate / 100;
+        doorSpeed = doorSpeed / 100;
         gridWidth = worldGeneration._mazeWidth;
         gridDepth = worldGeneration._mazeDepth;
 
@@ -46,6 +54,9 @@ public class WaterManager : MonoBehaviour
         doorGrid = worldGeneration._doorGrid;
 
         prefabSize = worldGeneration._prefabSize;
+
+        DoorShouldOpen = questions.DoorShouldOpen;
+        DoorPosition = questions.DoorPosition;
 
         WaterGrid = new bool[gridWidth, gridDepth];
         WaterPlaced = new GameObject[gridWidth, gridDepth];
@@ -58,6 +69,15 @@ public class WaterManager : MonoBehaviour
     }
     void Update(){
         UpdateWater();
+        OpenDoor(DoorShouldOpen, DoorPosition);
+    }
+
+    public void OpenDoor(bool DoorShouldOpen, Vector3 DoorPosition){
+        if (DoorShouldOpen == true && DoorPosition != null){
+            if(DoorPosition.y < doorTargetHeight){
+                DoorPosition.y += doorSpeed * Time.deltaTime;
+            }
+        }
     }
 
     // Funtionen tjekker for hver felt i gridet om der er plads
@@ -142,10 +162,9 @@ public class WaterManager : MonoBehaviour
     {
         // Totatle vandmængde stiger med dette
         int roomAmount = openRoomCoords.Count;
-        totalWaterAmount += waterFlowRate * roomAmount;
+        totalWaterAmount += waterFlowRate * Time.deltaTime * roomAmount;
 
-        for (int roomNumb = 0; roomNumb < roomAmount; roomNumb++)
-        {
+        for (int roomNumb = 0; roomNumb < roomAmount; roomNumb++){
             // Koordinater til rum
             int i = openRoomCoords[roomNumb][0];
             int j = openRoomCoords[roomNumb][1];
@@ -170,13 +189,13 @@ public class WaterManager : MonoBehaviour
 
             if (preferredHeight > currentHeight)
             {
-                Height[i, j] = currentHeight + (waterFlowRate / 100 * Time.deltaTime);
+                Height[i, j] = currentHeight + (waterFlowRate * Time.deltaTime);
                 if (Height[i, j] > preferredHeight)
                 {
                     Height[i, j] = preferredHeight;
                 }
             } else if (preferredHeight < currentHeight) {
-                Height[i, j] = currentHeight - (waterFlowRate / 100 * Time.deltaTime);
+                Height[i, j] = currentHeight - (waterFlowRate * Time.deltaTime);
                 if (Height[i, j] < preferredHeight)
                 {
                     Height[i, j] = preferredHeight;
