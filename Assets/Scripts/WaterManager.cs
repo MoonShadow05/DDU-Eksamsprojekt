@@ -1,14 +1,6 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using Unity.VisualScripting;
-using Unity.Collections;
-using System;
-using UnityEngine.Rendering;
-using UnityEngine.ProBuilder.Shapes;
-using System.IO.Compression;
-using UnityEngine.UIElements;
 
 public class WaterManager : MonoBehaviour
 {
@@ -44,8 +36,17 @@ public class WaterManager : MonoBehaviour
 
     public float doorSpeed;
 
-    public float doorTargetHeight; 
-    
+    public float doorTargetHeight;
+
+
+    private void Awake()
+    {
+        if (questions == null)
+        {
+            questions = FindFirstObjectByType<QuestionPopupTrigger>();
+        }
+    }
+
     void Start(){
         totalWaterAmount = startWaterAmount;
         waterFlowRate = waterFlowRate / 100;

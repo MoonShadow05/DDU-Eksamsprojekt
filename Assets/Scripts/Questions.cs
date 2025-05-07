@@ -52,9 +52,15 @@ public class QuestionPopupTrigger : MonoBehaviour
         // Assign Camera Script (assumes it's on main camera or tagged object)
         if (cameraScript == null)
         {
-            var camObj = Camera.main != null ? Camera.main.gameObject : GameObject.FindWithTag("MainCamera");
-            if (camObj != null)
-                cameraScript = camObj.GetComponent<MonoBehaviour>(); // Replace with specific type if you know it
+            
+            if (Camera.main != null && Camera.main.transform.parent != null)
+            {
+                Debug.Log("✅ PlayerLook script found on CameraHolder.");
+                cameraScript = Camera.main.transform.parent.GetComponent<PlayerLook>();
+            } else
+            {
+                Debug.LogError("❌ PlayerLook script not found on CameraHolder.");
+            }
         }
 
         // Assign Door Blocker Collider (e.g. find by tag or name if needed)
@@ -73,7 +79,12 @@ public class QuestionPopupTrigger : MonoBehaviour
         popupPanel.SetActive(true);
         exercises.LoadRandomQuestion(this);
 
-        if (cameraScript != null) cameraScript.enabled = false;
+        if (cameraScript != null)
+        {
+
+            if (cameraScript is PlayerLook lookScript)
+            lookScript.SetFrozen(true);
+        }
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -87,7 +98,11 @@ public class QuestionPopupTrigger : MonoBehaviour
 
         popupPanel.SetActive(false);
 
-        if (cameraScript != null) cameraScript.enabled = true;
+         if (cameraScript != null)
+        {
+            if (cameraScript is PlayerLook lookScript)
+                lookScript.SetFrozen(false);
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -118,7 +133,8 @@ public class QuestionPopupTrigger : MonoBehaviour
             doorBlockerCollider.enabled = false;
 
         if (cameraScript != null)
-            cameraScript.enabled = true;
+            if (cameraScript is PlayerLook lookScript)
+                lookScript.SetFrozen(false);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
