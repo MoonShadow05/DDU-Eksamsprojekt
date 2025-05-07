@@ -72,11 +72,9 @@ public class WaterManager : MonoBehaviour
     void Update(){
         foreach (GameObject Door in movingDoors) {
             Door.transform.position += new Vector3(0,doorSpeed*Time.deltaTime,0);
-            Debug.Log("Rykket");
             if (Door.transform.position.y >= doorTargetHeight) {
                 Door.transform.position = new Vector3(Door.transform.position.x,doorTargetHeight,Door.transform.position.z);
                 movedDoors++;
-                Debug.Log("Fjernet fra liste");
             }
         }
 
@@ -90,10 +88,8 @@ public class WaterManager : MonoBehaviour
     }
 
     public void OpenDoor(bool DoorShouldOpen, GameObject Door){
-        Debug.Log("Funktion køres");
         if (DoorShouldOpen == true && Door != null) {
             movingDoors.Add(Door);
-            Debug.Log("Added til liste");
         }
     }
 
