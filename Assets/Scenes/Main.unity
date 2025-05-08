@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mazeCellPrefab: {fileID: 2306555772913984916, guid: 8d6044530d18bfc46a240e34bf20a332, type: 3}
-  _openingPrefab: {fileID: 8524794194308890934, guid: 8d418ef94bd785249b3d102faf6a602e, type: 3}
+  _openingPrefab: {fileID: 195149882217477, guid: fef9a89244f240e4c93eeed43da4efe2, type: 3}
   _doorPrefab: {fileID: 5735758874266245303, guid: 0292ea2d1a3600a4790304c961a70b65, type: 3}
   _exitCellPrefab: {fileID: 3909610435960452727, guid: 1f7c77535cd379349a2963ab08bec301, type: 3}
   _mazeWidth: 3

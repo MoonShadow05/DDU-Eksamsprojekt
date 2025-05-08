@@ -290,7 +290,7 @@ using UnityEngine.InputSystem;
                 yPos = 15-8.75f;
             } else
             {
-                yPos = 0;
+                yPos = 1;
             }
 
             if (x % 2 == 1)
