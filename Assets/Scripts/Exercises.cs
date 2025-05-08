@@ -92,25 +92,39 @@ public class Exercises : MonoBehaviour
 
         // Example question:
         easyQuestions.Add(
-            new Exercise { question = "Hvad er 2+2?", correctAnswer = "4", options = new string[] { "3", "4", "5" }, level = 0, FeedbackText = "Rigtig!" });
+            new Exercise { question = "Hvad bliver værdien af funktionen f(x) = x - 2, hvor x = 1?", correctAnswer = "-1", options = new string[] { "1", "-2", "-1" }, level = 0, FeedbackText = "Rigtig!" });
         easyQuestions.Add(
-            new Exercise { question = "Hvad er 3+5?", correctAnswer = "8", options = new string[] { "7", "8", "9" }, level = 0, FeedbackText = "Rigtig!" });
+            new Exercise { question = "Hvad bliver værdien af funktionen f(x) = 2x + 1, hvor x = 2?", correctAnswer = "5", options = new string[] { "12", "5", "2" }, level = 0, FeedbackText = "Rigtig!" });
         easyQuestions.Add(
-            new Exercise { question = "Hvad er 5-2?", correctAnswer = "3", options = new string[] { "1", "2", "3" }, level = 0, FeedbackText = "Rigtig!" });
+            new Exercise { question = "Hvad bliver værdien af funktionen f(x) = x + (-3), hvor x = 7?", correctAnswer = "4", options = new string[] { "7", "2", "4" }, level = 0, FeedbackText = "Rigtig!" });
+        easyQuestions.Add(
+           new Exercise { question = "Hvad bliver værdien af funktionen f(x) = 3x + (-4), hvor x = 9?", correctAnswer = "23", options = new string[] { "23", "13", "20" }, level = 0, FeedbackText = "Rigtig!" });
+        easyQuestions.Add(
+           new Exercise { question = "Hvad bliver værdien af funktionen f(x) = 5x + 3, hvor x = 0?", correctAnswer = "3", options = new string[] { "0", "3", "5" }, level = 0, FeedbackText = "Rigtig!" });
 
         mediumQuestions.Add(
-            new Exercise { question = "Hvad er 10*2?", correctAnswer = "20", options = new string[] { "15", "20", "25" }, level = 1, FeedbackText = "Rigtig!" });
+            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(3, 7) og B(9, 19)?", correctAnswer = "2", options = new string[] { "2", "5", "10" }, level = 1, FeedbackText = "Rigtig!" });
         mediumQuestions.Add(
-            new Exercise { question = "Hvad er 15/3?", correctAnswer = "5", options = new string[] { "4", "5", "6" }, level = 1, FeedbackText = "Rigtig!" });
+            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(4, 7) og B(7, 10)?", correctAnswer = "1", options = new string[] { "4", "1", "6" }, level = 1, FeedbackText = "Rigtig!" });
         mediumQuestions.Add(
-            new Exercise { question = "Hvad er 12-4?", correctAnswer = "8", options = new string[] { "6", "7", "8" }, level = 1, FeedbackText = "Rigtig!" });
-        
+            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(4, 21) og B(6, 29)", correctAnswer = "4", options = new string[] { "6", "7", "4" }, level = 1, FeedbackText = "Rigtig!" });
+        mediumQuestions.Add(
+            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(0, 5) og (10, 15)", correctAnswer = "1", options = new string[] { "1", "7", "2" }, level = 1, FeedbackText = "Rigtig!" });
+        mediumQuestions.Add(
+            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(0, 3) og (9, 48)", correctAnswer = "5", options = new string[] { "5", "6", "9" }, level = 1, FeedbackText = "Rigtig!" });
+
+
         hardQuestions.Add(
-            new Exercise { question = "Hvad er 2^3?", correctAnswer = "8", options = new string[] { "6", "7", "8" }, level = 2, FeedbackText = "Rigtig!" });
+            new Exercise { question = "Du skal løse denne ligning og finde x: 5x - 7 = 3x + 9?", correctAnswer = "8", options = new string[] { "-5", "9", "8" }, level = 2, FeedbackText = "Rigtig!" });
         hardQuestions.Add(
-            new Exercise { question = "Hvad er kvadratroden af 16?", correctAnswer = "4", options = new string[] { "3", "4", "5" }, level = 2, FeedbackText = "Rigtig!" });
+            new Exercise { question = "Du skal løse denne ligning og finde x: 4x + 6 = 2x + 12?", correctAnswer = "3", options = new string[] { "3", "4", "5" }, level = 2, FeedbackText = "Rigtig!" });
         hardQuestions.Add(
-            new Exercise { question = "Hvad er 5*5?", correctAnswer = "25", options = new string[] { "20", "25", "30" }, level = 2, FeedbackText = "Rigtig!" }); 
+            new Exercise { question = "Du skal løse denne ligning og finde x: 7x - 4 = 5x + 10?", correctAnswer = "7", options = new string[] { "7", "-3", "5" }, level = 2, FeedbackText = "Rigtig!" });
+        hardQuestions.Add(
+            new Exercise { question = "Du skal løse denne ligning og finde x: 8x + 5 = 6x + 15?", correctAnswer = "5", options = new string[] { "9", "12", "5" }, level = 2, FeedbackText = "Rigtig!" });
+        hardQuestions.Add(
+            new Exercise { question = "Du skal løse denne ligning og finde x: 10x - 12 = 3x + 9?", correctAnswer = "3", options = new string[] { "4", "1", "3" }, level = 2, FeedbackText = "Rigtig!" });
+
 
     }
 
