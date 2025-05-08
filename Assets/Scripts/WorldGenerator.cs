@@ -282,6 +282,9 @@ using UnityEngine.InputSystem;
             int z = coordsList[i][1];
 
             float yPos;
+            float xPos = (x - 1) * _prefabSize / 2;
+            float zPos = (z - 1) * _prefabSize / 2;
+
             if (prefab == _doorPrefab)
             {
                 yPos = 15-8.75f;
@@ -292,15 +295,9 @@ using UnityEngine.InputSystem;
 
             if (x % 2 == 1)
             {
-                float xPos = (x - 1) * _prefabSize / 2;
-                float zPos = (z - 1) * _prefabSize / 2;
-
                 grid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.Euler(0, 90, 0));
             } else
             {
-                float xPos = (x - 1) * _prefabSize / 2;;
-                float zPos = (z - 1) * _prefabSize / 2;
-
                 grid[x, z] = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
             }
         }
