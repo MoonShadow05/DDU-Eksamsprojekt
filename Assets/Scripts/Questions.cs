@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Linq;
 
+
 public class QuestionPopupTrigger : MonoBehaviour
 {
     [SerializeField] private WaterManager WaterManager;
@@ -10,6 +11,7 @@ public class QuestionPopupTrigger : MonoBehaviour
     [SerializeField] private Exercises exercises;
     [SerializeField] private MonoBehaviour cameraScript;
     [SerializeField] private Collider doorBlockerCollider;
+    [SerializeField] private GameObject feedbackPanel;
 
     private Collider triggerCollider;
 
@@ -17,9 +19,9 @@ public class QuestionPopupTrigger : MonoBehaviour
     private bool DoorShouldOpen = false;
     private GameObject DoorPosition;
 
-    private void Update(){
+   /*  private void Update(){
 
-    }
+    } */
     private void Awake()
     {
         triggerCollider = GetComponent<Collider>();
@@ -29,16 +31,18 @@ public class QuestionPopupTrigger : MonoBehaviour
             WaterManager = FindFirstObjectByType<WaterManager>();
 
         // Assign Popup Panel (you can also use a tag or name here)
-       if (popupPanel == null)
+       if (popupPanel == null /* || feedbackPanel == null */)
         {
-            var hud = GameObject.Find("Hud");
+            var hud = GameObject.Find("HUD");
             if (hud != null)
             {
                 popupPanel = hud.GetComponentsInChildren<Transform>(true)
                                 .FirstOrDefault(t => t.name == "PopupMenu")?.gameObject;
-
-                Debug.Log($"Popup Panel Found: {popupPanel != null}");
-
+                                /* Debug.Log($"Popup Panel Found: {popupPanel != null}"); */
+                /* feedbackPanel = hud.GetComponentsInChildren<Transform>(true)
+                                .FirstOrDefault(t => t.name == "FeedbackPanel")?.gameObject;
+                                Debug.Log($"Feedback Panel Found: {feedbackPanel != null}");
+ */
             }
         }
 
@@ -51,9 +55,15 @@ public class QuestionPopupTrigger : MonoBehaviour
         // Assign Camera Script (assumes it's on main camera or tagged object)
         if (cameraScript == null)
         {
-            var camObj = Camera.main != null ? Camera.main.gameObject : GameObject.FindWithTag("MainCamera");
-            if (camObj != null)
-                cameraScript = camObj.GetComponent<MonoBehaviour>(); // Replace with specific type if you know it
+            
+            if (Camera.main != null && Camera.main.transform.parent != null)
+            {
+                /* Debug.Log("✅ PlayerLook script found on CameraHolder."); */
+                cameraScript = Camera.main.transform.parent.GetComponent<PlayerLook>();
+            } else
+            {
+                /* Debug.LogError("❌ PlayerLook script not found on CameraHolder."); */
+            }
         }
 
         // Assign Door Blocker Collider (e.g. find by tag or name if needed)
@@ -72,12 +82,17 @@ public class QuestionPopupTrigger : MonoBehaviour
         popupPanel.SetActive(true);
         exercises.LoadRandomQuestion(this);
 
-        if (cameraScript != null) cameraScript.enabled = false;
+        if (cameraScript != null)
+        {
+
+            if (cameraScript is PlayerLook lookScript)
+            lookScript.SetFrozen(true);
+        }
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        Debug.Log("Entered question zone");
+        /* Debug.Log("Entered question zone"); */
     }
 
     private void OnTriggerExit(Collider other)
@@ -86,25 +101,38 @@ public class QuestionPopupTrigger : MonoBehaviour
 
         popupPanel.SetActive(false);
 
-        if (cameraScript != null) cameraScript.enabled = true;
+         if (cameraScript != null)
+        {
+            if (cameraScript is PlayerLook lookScript)
+                lookScript.SetFrozen(false);
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        Debug.Log("Exited question zone");
+       /*  Debug.Log("Exited question zone"); */
     }
 
     public void CheckAnswer(string selectedAnswer)
     {
         if (selectedAnswer == exercises.correctAnswer)
         {
-            Debug.Log("✅ Correct!");
+           /*  Debug.Log("✅ Correct!"); */
+            exercises.WrongAnswers = 0;
+            exercises.RightAnswers += 1;
+            /* Debug.Log(exercises.WrongAnswers+" "+exercises.RightAnswers); */
             CompleteQuestion(); 
+
 
         }
         else
         {
-            Debug.Log("❌ Wrong answer.");
+            /* Debug.Log("❌ Wrong answer."); */
+           /*  feedbackPanel.SetActive(true);
+            feedbackPanel.GetComponentInChildren<TMPro.TMP_Text>().text = exercises.FeedbackText.text; */
+            exercises.WrongAnswers += 1;
+            exercises.RightAnswers = 0;
+           /*  Debug.Log(exercises.WrongAnswers+" "+exercises.RightAnswers); */
         }
     }
 
@@ -113,11 +141,12 @@ public class QuestionPopupTrigger : MonoBehaviour
         popupPanel.SetActive(false);
         triggerCollider.enabled = false;
 
-        if (doorBlockerCollider != null)
-            doorBlockerCollider.enabled = false;
+        /* if (doorBlockerCollider != null)
+            doorBlockerCollider.enabled = false; */
 
         if (cameraScript != null)
-            cameraScript.enabled = true;
+            if (cameraScript is PlayerLook lookScript)
+                lookScript.SetFrozen(false);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -127,7 +156,7 @@ public class QuestionPopupTrigger : MonoBehaviour
         WaterManager.OpenDoor(DoorShouldOpen, DoorPosition);
 
 
-        Debug.LogError($"✅ Question complete. Door unlocked.");
+       /*  Debug.LogError($"✅ Question complete. Door unlocked."); */
     }
 }
  
