@@ -1,6 +1,14 @@
+using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
+using Unity.Collections;
+using System;
+using UnityEngine.Rendering;
+using UnityEngine.ProBuilder.Shapes;
+using System.IO.Compression;
+using UnityEngine.UIElements;
 
 public class WaterManager : MonoBehaviour
 {
@@ -18,39 +26,28 @@ public class WaterManager : MonoBehaviour
     [SerializeField] private WorldGenerator worldGeneration;
     [SerializeField] private QuestionPopupTrigger questions;
 
-    //[SerializeField] private float preferredHeight;
-    //[SerializeField] private float prefferedHeightIncrease;
     [SerializeField] private float waterStartHeight;
-    [SerializeField] private float startWaterAmount;
-    [SerializeField] private float waterFlowRate;
-    private float totalWaterAmount;
+    [SerializeField] private float waterIncreaseRate;
+    private float totalWaterAmount = 0;
     private float[,] Height;
+
+    private int waterUpdateAmount = 0;
 
     private GameObject[,] WaterPlaced;
     
     List<List<int>> openRoomCoords = new List<List<int>>();
 
     List<GameObject> movingDoors = new List<GameObject>();
-    //List<GameObject> movedDoors = new List<GameObject>();
+
+    int oldRoomAmount;
+
     private int movedDoors = 0;
 
     public float doorSpeed;
 
-    public float doorTargetHeight;
-
-
-    private void Awake()
-    {
-        if (questions == null)
-        {
-            questions = FindFirstObjectByType<QuestionPopupTrigger>();
-        }
-    }
-
+    public float doorTargetHeight; 
+    
     void Start(){
-        totalWaterAmount = startWaterAmount;
-        waterFlowRate = waterFlowRate / 100;
-        doorSpeed = doorSpeed / 100;
         gridWidth = worldGeneration._mazeWidth;
         gridDepth = worldGeneration._mazeDepth;
 
@@ -68,6 +65,7 @@ public class WaterManager : MonoBehaviour
         Height[0,0] = -8.5f;
         SpawnWater(0,0);
         WaterSpread();
+        oldRoomAmount = openRoomCoords.Count;
     }
     
     void Update(){
@@ -169,6 +167,7 @@ public class WaterManager : MonoBehaviour
 
     private void SpawnWater(int i, int j){
         WaterGrid[i, j] = true;
+        Height[i, j] = waterStartHeight;
         Vector3 waterPosition = new Vector3(i*prefabSize, Height[i,j], j*prefabSize);
         GameObject waterSegment = Instantiate(waterPrefab, waterPosition, quaternion.identity);
         WaterPlaced[i, j] = waterSegment;
@@ -180,14 +179,51 @@ public class WaterManager : MonoBehaviour
     {
         // Totatle vandmængde stiger med dette
         int roomAmount = openRoomCoords.Count;
-        totalWaterAmount += waterFlowRate * Time.deltaTime * roomAmount;
+        float waterIncrease = Mathf.Pow(waterIncreaseRate,waterUpdateAmount) * Time.deltaTime;
+        //Mathf.Pow(baseNumber, exponent)
+        totalWaterAmount += waterIncrease; // Den totale vandmængde stigning
 
-        for (int roomNumb = 0; roomNumb < roomAmount; roomNumb++){
+        for (int roomNumb = 0; roomNumb < roomAmount; roomNumb++){ // Vandhøjden bliver opdateret for alle rum med vand
             // Koordinater til rum
             int i = openRoomCoords[roomNumb][0];
             int j = openRoomCoords[roomNumb][1];
 
-            Height[i, j] = waterStartHeight + totalWaterAmount / roomAmount;
+            // Nuværende højde, og højden den vil opnå
+            float currentRoomWaterHeight = Height[i, j];
+            float waterHeightTarget = totalWaterAmount / roomAmount + waterStartHeight;
+
+            if (currentRoomWaterHeight < waterHeightTarget) // Øger vandet, hvis det ligger under 
+            {
+                float waterRiseSpeed = doorSpeed * Time.deltaTime;
+                Height[i, j] = currentRoomWaterHeight + waterRiseSpeed;
+
+                if (Height[i, j] > waterHeightTarget)
+                {
+                    Height[i, j] = waterHeightTarget;
+                }
+            } else if (currentRoomWaterHeight > waterHeightTarget) // Falder hvis vandet er højere end det skal
+            {
+                if (oldRoomAmount < roomAmount)
+                {
+                    int deltaRoomAmount = roomAmount - oldRoomAmount;
+                    float waterFallSpeeed = ((doorSpeed * deltaRoomAmount) / oldRoomAmount) * Time.deltaTime;
+                    Height[i, j] = currentRoomWaterHeight - waterFallSpeeed ;
+
+                    if (Height[i, j] < waterHeightTarget)
+                    {
+                        Height[i, j] = waterHeightTarget;
+                        oldRoomAmount = roomAmount;
+                    }
+                } else // Hvis vandet er af en anden grund for højt, vil det falde alligevel.
+                {
+                    float waterFallSpeeed = doorSpeed * Time.deltaTime;
+                    if (Height[i, j] < waterHeightTarget)
+                    {
+                        Height[i, j] = waterHeightTarget;
+                        oldRoomAmount = roomAmount;
+                    }
+                }
+            }
 
             // Placer højere op
             Vector3 NewPos = WaterPlaced[i, j].transform.position;
@@ -195,35 +231,7 @@ public class WaterManager : MonoBehaviour
             WaterPlaced[i, j].transform.position = NewPos;
         }
 
-
-        /*
-        for (int roomNumb = 0; roomNumb < openRoomCoords.Count; roomNumb++)
-        {
-            int i = openRoomCoords[roomNumb][0];
-            int j = openRoomCoords[roomNumb][1];
-
-            preferredHeight += (prefferedHeightIncrease / 100 * Time.deltaTime);
-            float currentHeight = Height[i, j];
-
-            if (preferredHeight > currentHeight)
-            {
-                Height[i, j] = currentHeight + (waterFlowRate * Time.deltaTime);
-                if (Height[i, j] > preferredHeight)
-                {
-                    Height[i, j] = preferredHeight;
-                }
-            } else if (preferredHeight < currentHeight) {
-                Height[i, j] = currentHeight - (waterFlowRate * Time.deltaTime);
-                if (Height[i, j] < preferredHeight)
-                {
-                    Height[i, j] = preferredHeight;
-                }
-            }
-
-            Vector3 NewPos = WaterPlaced[i, j].transform.position;
-            NewPos.y = Height[i, j];
-            WaterPlaced[i, j].transform.position = NewPos;
-        }*/
+        waterUpdateAmount++;
 
     }
 

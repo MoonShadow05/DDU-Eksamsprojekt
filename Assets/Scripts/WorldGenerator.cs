@@ -74,7 +74,7 @@ using UnityEngine.InputSystem;
             InstantiateOpeningsAndDoors(_openingPrefab, openings, _openingGrid);
             InstantiateOpeningsAndDoors(_doorPrefab, doors, _doorGrid);
 
-            // Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
+            Debug.Log("Walls: " + walls.Count + "    Openings: " + openings.Count + "    Doors: " + doors.Count);
         }
 
         private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -275,7 +275,7 @@ using UnityEngine.InputSystem;
             float yPos;
             if (prefab == _doorPrefab)
             {
-                yPos = 2;
+                yPos = 15-8.75f;
             } else
             {
                 yPos = 0;

@@ -633,11 +633,10 @@ MonoBehaviour:
   waterPrefab: {fileID: 5907322198663239626, guid: 493900e83d6601d4f9d48141d6dc1f54, type: 3}
   worldGeneration: {fileID: 131683529}
   questions: {fileID: 0}
-  waterStartHeight: -8.5
-  startWaterAmount: 0
-  waterFlowRate: 1
-  doorSpeed: 750
-  doorTargetHeight: 30
+  waterStartHeight: -8.75
+  waterIncreaseRate: 1.0001
+  doorSpeed: 5
+  doorTargetHeight: 18
 --- !u!4 &446584320
 Transform:
   m_ObjectHideFlags: 0
