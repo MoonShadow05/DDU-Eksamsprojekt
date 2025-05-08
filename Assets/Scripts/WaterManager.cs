@@ -73,6 +73,10 @@ public class WaterManager : MonoBehaviour
     void Update(){
         foreach (GameObject Door in movingDoors) {
             Door.transform.position += new Vector3(0,doorSpeed*Time.deltaTime,0);
+            int i = (int) Door.transform.position.x * 2 / prefabSize + 1;
+            int j = (int) Door.transform.position.z * 2 / prefabSize + 1;
+            openingGrid[i,j] = new GameObject();
+            WaterSpread();
             if (Door.transform.position.y >= doorTargetHeight) {
                 Door.transform.position = new Vector3(Door.transform.position.x,doorTargetHeight,Door.transform.position.z);
                 movedDoors++;
