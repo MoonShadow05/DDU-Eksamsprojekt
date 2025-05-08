@@ -636,7 +636,7 @@ MonoBehaviour:
   questions: {fileID: 0}
   waterStartHeight: -8.75
   waterIncreaseRate: 1.0001
-  doorSpeed: 5
+  doorSpeed: 10
   doorTargetHeight: 18
 --- !u!4 &446584320
 Transform:
