@@ -286,7 +286,7 @@ MonoBehaviour:
   _doorPrefab: {fileID: 5735758874266245303, guid: 0292ea2d1a3600a4790304c961a70b65, type: 3}
   _mazeWidth: 11
   _mazeDepth: 11
-  _extraWallBreakPercentage: 20
+  _extraWallBreakPercentage: 15
   _doorAmountPercentage: 50
   _prefabSize: 30
 --- !u!4 &131683530
