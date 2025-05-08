@@ -137,8 +137,8 @@ public class QuestionPopupTrigger : MonoBehaviour
         popupPanel.SetActive(false);
         triggerCollider.enabled = false;
 
-        if (doorBlockerCollider != null)
-            doorBlockerCollider.enabled = false;
+        /* if (doorBlockerCollider != null)
+            doorBlockerCollider.enabled = false; */
 
         if (cameraScript != null)
             if (cameraScript is PlayerLook lookScript)
