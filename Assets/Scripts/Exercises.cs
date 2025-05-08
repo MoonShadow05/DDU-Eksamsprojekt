@@ -11,8 +11,9 @@ public class Exercises : MonoBehaviour
 
     [HideInInspector] public string correctAnswer;
 
-    [SerializeField] private Exercises.Difficulty questionDifficulty = Exercises.Difficulty.Easy;
-
+    [SerializeField] private Exercises.Difficulty questionDifficulty = Exercises.Difficulty.Medium;
+    [HideInInspector] public int RightAnswers = 0;
+    [HideInInspector] public int WrongAnswers = 0;
 
     [System.Serializable]
     public class Exercise
@@ -24,7 +25,30 @@ public class Exercises : MonoBehaviour
         public int level; // 0 = Easy, 1 = Medium, 2 = Hard
     }
 
+    void Update(){
+        if(RightAnswers != 0 || WrongAnswers != 0){
+            if(RightAnswers == 3 && questionDifficulty == Exercises.Difficulty.Easy || WrongAnswers == 3 && questionDifficulty == Exercises.Difficulty.Hard){
+                questionDifficulty = Exercises.Difficulty.Medium;
+                Debug.Log("Nyt niveau er mellem");
+                RightAnswers = 0;
+                WrongAnswers = 0;
 
+            }
+            else if(RightAnswers == 3 && questionDifficulty == Exercises.Difficulty.Medium){
+                questionDifficulty = Exercises.Difficulty.Hard;
+                Debug.Log("Nyt niveau er svær");
+                RightAnswers = 0;
+                WrongAnswers = 0;
+            }
+            else if(WrongAnswers == 3 && questionDifficulty == Exercises.Difficulty.Medium){
+                questionDifficulty = Exercises.Difficulty.Easy;
+                Debug.Log("Nyt niveau er nem");
+                RightAnswers = 0;
+                WrongAnswers = 0;
+            }
+        }
+
+    }
     private void Awake()
 {
     var HUD = GameObject.Find("HUD");
