@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.21176471, g: 0.22745098, b: 0.25882354, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -284,8 +284,9 @@ MonoBehaviour:
   _mazeCellPrefab: {fileID: 2306555772913984916, guid: 8d6044530d18bfc46a240e34bf20a332, type: 3}
   _openingPrefab: {fileID: 8524794194308890934, guid: 8d418ef94bd785249b3d102faf6a602e, type: 3}
   _doorPrefab: {fileID: 5735758874266245303, guid: 0292ea2d1a3600a4790304c961a70b65, type: 3}
-  _mazeWidth: 11
-  _mazeDepth: 11
+  _exitCellPrefab: {fileID: 3909610435960452727, guid: 1f7c77535cd379349a2963ab08bec301, type: 3}
+  _mazeWidth: 3
+  _mazeDepth: 3
   _extraWallBreakPercentage: 15
   _doorAmountPercentage: 50
   _prefabSize: 30
@@ -630,7 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99856078be853f4bb295380b20e9d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterPrefab: {fileID: 5907322198663239626, guid: 493900e83d6601d4f9d48141d6dc1f54, type: 3}
+  waterPrefab: {fileID: 39297146958154755, guid: 7a2f8bb31ac73664cab25630d0d3133c, type: 3}
   worldGeneration: {fileID: 131683529}
   questions: {fileID: 0}
   waterStartHeight: -8.75

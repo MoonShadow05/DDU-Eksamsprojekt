@@ -18,6 +18,9 @@ using UnityEngine.InputSystem;
         private GameObject _doorPrefab;
 
         [SerializeField]
+        private MazeCell _exitCellPrefab;
+
+        [SerializeField]
         public int _mazeWidth;
 
         [SerializeField]
@@ -48,8 +51,14 @@ using UnityEngine.InputSystem;
             {
                 for (int z = 0; z < _mazeDepth; z++)
                 {
-                    _mazeGrid[x,z] = Instantiate(_mazeCellPrefab, new Vector3(x * _prefabSize, 0, z * _prefabSize), Quaternion.identity);
-
+                    if (x + 1 == _mazeWidth && z + 1 == _mazeWidth)
+                    {
+                        _mazeGrid[x, z] = Instantiate(_exitCellPrefab, new Vector3(x * _prefabSize, 0, z * _prefabSize), Quaternion.identity);
+                    } else
+                    {
+                        _mazeGrid[x, z] = Instantiate(_mazeCellPrefab, new Vector3(x * _prefabSize, 0, z * _prefabSize), Quaternion.identity);
+                    }
+                       
                     if (z != 0)
                     {
                         walls.Add(new List<int> { x * 2 + 1, z * 2 }); // Back Wall
