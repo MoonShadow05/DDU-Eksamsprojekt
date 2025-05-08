@@ -1,31 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
-    private GameObject menu;
-
-    public void menuPlayGame()
+    // Call this from the Start button
+    public void OnStartButtonPressed()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("Main"); // Loads the scene named "Main"
     }
 
-    public void menuReturnToMainMenu()
+    // Call this from the Quit button
+    public void OnQuitButtonPressed()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
-    }
-
-    public void menuRestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-    }
-
-    public void menuQuitGame()
-    {
-        Debug.Log("MenuQUIT");
+        Debug.Log("Quit button pressed. Exiting game...");
         Application.Quit();
+
+        // Note: This won't quit the game in the Unity editor
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
