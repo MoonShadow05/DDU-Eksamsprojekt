@@ -33,17 +33,17 @@ public class Exercises : MonoBehaviour
         if(RightAnswers == 3 || WrongAnswers == 3){
             if(RightAnswers == 3 && questionDifficulty == Exercises.Difficulty.Easy || WrongAnswers == 3 && questionDifficulty == Exercises.Difficulty.Hard){
                 questionDifficulty = Exercises.Difficulty.Medium;
-                Debug.Log("Nyt niveau er mellem");
+                /* Debug.Log("Nyt niveau er mellem"); */
 
             }
             else if(RightAnswers == 3 && questionDifficulty == Exercises.Difficulty.Medium){
                 questionDifficulty = Exercises.Difficulty.Hard;
-                Debug.Log("Nyt niveau er svær");
+                /* Debug.Log("Nyt niveau er svær"); */
 
             }
             else if(WrongAnswers == 3 && questionDifficulty == Exercises.Difficulty.Medium){
                 questionDifficulty = Exercises.Difficulty.Easy;
-                Debug.Log("Nyt niveau er nem");
+                /* Debug.Log("Nyt niveau er nem"); */
 
             }
              RightAnswers = 0;
@@ -67,17 +67,17 @@ public class Exercises : MonoBehaviour
 
         // Find buttons under ButtonGroup
         var buttonGroup = HUD.transform.Find("PopupMenu/ButtonGroup");
-        Debug.Log($"ButtonGroup found: {buttonGroup != null}");
+        /* Debug.Log($"ButtonGroup found: {buttonGroup != null}"); */
         if (buttonGroup != null)
         {
             Button[] found = buttonGroup.GetComponentsInChildren<Button>();
-            Debug.Log(buttonGroup.childCount);
+            /* Debug.Log(buttonGroup.childCount); */
             answerButtons = found;
-            Debug.Log($"✅ Found {answerButtons.Length} buttons under ButtonGroup.");
+            /* Debug.Log($"✅ Found {answerButtons.Length} buttons under ButtonGroup."); */
         }
         else
         {
-            Debug.LogWarning("❌ ButtonGroup not found under PopupMenu.");
+            /* Debug.LogWarning("❌ ButtonGroup not found under PopupMenu."); */
         }
     
     }
@@ -132,7 +132,7 @@ public class Exercises : MonoBehaviour
 
         if (selectedList.Count == 0)
         {
-            Debug.LogWarning("No questions found for selected difficulty.");
+            /* Debug.LogWarning("No questions found for selected difficulty."); */
             return;
         }
 
@@ -145,7 +145,7 @@ public class Exercises : MonoBehaviour
 
         if (answerButtons.Length < shuffled.Count)
         {
-            Debug.LogError("Number of answer buttons does not match number of options.");
+            /* Debug.LogError("Number of answer buttons does not match number of options."); */
             return;
         }
 
