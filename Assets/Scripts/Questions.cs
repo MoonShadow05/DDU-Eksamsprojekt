@@ -80,7 +80,7 @@ public class QuestionPopupTrigger : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         popupPanel.SetActive(true);
-        exercises.LoadRandomQuestion(this);
+        exercises.LoadRandomQuestion(this, Exercises.questionDifficulty);
 
         if (cameraScript != null)
         {
@@ -118,9 +118,9 @@ public class QuestionPopupTrigger : MonoBehaviour
         if (selectedAnswer == exercises.correctAnswer)
         {
            /*  Debug.Log("✅ Correct!"); */
-            exercises.WrongAnswers = 0;
-            exercises.RightAnswers += 1;
-            /* Debug.Log(exercises.WrongAnswers+" "+exercises.RightAnswers); */
+            Exercises.WrongAnswers = 0;
+            Exercises.RightAnswers += 1;
+            Debug.Log(Exercises.WrongAnswers+" "+Exercises.RightAnswers);
             CompleteQuestion(); 
 
 
@@ -130,9 +130,9 @@ public class QuestionPopupTrigger : MonoBehaviour
             /* Debug.Log("❌ Wrong answer."); */
            /*  feedbackPanel.SetActive(true);
             feedbackPanel.GetComponentInChildren<TMPro.TMP_Text>().text = exercises.FeedbackText.text; */
-            exercises.WrongAnswers += 1;
-            exercises.RightAnswers = 0;
-           /*  Debug.Log(exercises.WrongAnswers+" "+exercises.RightAnswers); */
+            Exercises.WrongAnswers += 1;
+            Exercises.RightAnswers = 0;
+            Debug.Log(Exercises.WrongAnswers+" "+Exercises.RightAnswers);
         }
     }
 

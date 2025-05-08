@@ -13,9 +13,9 @@ public class Exercises : MonoBehaviour
 
     [HideInInspector] public string correctAnswer;
 
-    [SerializeField] public Exercises.Difficulty questionDifficulty = Exercises.Difficulty.Medium;
-    [HideInInspector] public int RightAnswers;
-    [HideInInspector] public int WrongAnswers;
+    [SerializeField] public static Exercises.Difficulty questionDifficulty = Exercises.Difficulty.Medium;
+    [HideInInspector] public static int RightAnswers;
+    [HideInInspector] public static int WrongAnswers;
 
     [System.Serializable]
     public class Exercise
@@ -30,26 +30,28 @@ public class Exercises : MonoBehaviour
     }
 
     void Update(){
-        if(RightAnswers == 3 || WrongAnswers == 3){
-            if(RightAnswers == 3 && questionDifficulty == Exercises.Difficulty.Easy || WrongAnswers == 3 && questionDifficulty == Exercises.Difficulty.Hard){
+        if(RightAnswers == 3){
+            if(questionDifficulty == Exercises.Difficulty.Easy){
                 questionDifficulty = Exercises.Difficulty.Medium;
-                /* Debug.Log("Nyt niveau er mellem"); */
-
+                Debug.Log("Nyt niveau er mellem");
             }
-            else if(RightAnswers == 3 && questionDifficulty == Exercises.Difficulty.Medium){
+            else{
                 questionDifficulty = Exercises.Difficulty.Hard;
-                /* Debug.Log("Nyt niveau er svær"); */
-
+               Debug.Log("Nyt niveau er svær");
             }
-            else if(WrongAnswers == 3 && questionDifficulty == Exercises.Difficulty.Medium){
-                questionDifficulty = Exercises.Difficulty.Easy;
-                /* Debug.Log("Nyt niveau er nem"); */
-
-            }
-             RightAnswers = 0;
-             WrongAnswers = 0;
+            RightAnswers = 0;
         }
-
+        if(WrongAnswers == 3){
+            if(questionDifficulty == Exercises.Difficulty.Hard){
+                questionDifficulty = Exercises.Difficulty.Medium;
+                Debug.Log("Nyt niveau er mellem");
+            }
+            else{
+                questionDifficulty = Exercises.Difficulty.Easy;
+                Debug.Log("Nyt niveau er nem");
+            }
+            WrongAnswers = 0;
+        }
     }
     private void Awake()
 {
@@ -137,6 +139,7 @@ public class Exercises : MonoBehaviour
 
     public void LoadRandomQuestion(QuestionPopupTrigger triggerScript, Difficulty difficulty = Difficulty.Easy)
     {
+        Debug.Log($"vælger spørgsmål med sværhedsgrad: {difficulty.ToString()}");
         List<Exercise> selectedList = difficulty switch
         {
             Difficulty.Medium => mediumQuestions,
