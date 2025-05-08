@@ -294,8 +294,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  FeedbackText: {fileID: 0}
   correctAnswer: 
   questionDifficulty: 1
+  RightAnswers: 0
+  WrongAnswers: 0
   easyQuestions: []
   mediumQuestions: []
   hardQuestions: []
@@ -350,7 +353,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3, y: 0.8, z: 1}
+  m_Size: {x: 0.3, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5513503524431426499
 GameObject:
