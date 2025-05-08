@@ -125,6 +125,7 @@ public class QuestionPopupTrigger : MonoBehaviour
         else
         {
             Debug.Log("❌ Wrong answer.");
+            exercises.FeedbackText.text = exercises.FeedbackText.text + "\n" + exercises.FeedbackText.text;
             exercises.WrongAnswers += 1;
             exercises.RightAnswers = 0;
             Debug.Log(exercises.WrongAnswers+" "+exercises.RightAnswers);
