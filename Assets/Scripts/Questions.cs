@@ -115,10 +115,11 @@ public class QuestionPopupTrigger : MonoBehaviour
         if (selectedAnswer == exercises.correctAnswer)
         {
             Debug.Log("✅ Correct!");
-            exercises.RightAnswers = exercises.RightAnswers + 1;
             exercises.WrongAnswers = 0;
+            exercises.RightAnswers += 1;
             Debug.Log(exercises.WrongAnswers+" "+exercises.RightAnswers);
             CompleteQuestion(); 
+
 
         }
         else
