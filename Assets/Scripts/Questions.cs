@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Linq;
-using UnityEngine.UIElements;
 
 
 public class QuestionPopupTrigger : MonoBehaviour
@@ -118,17 +117,16 @@ public class QuestionPopupTrigger : MonoBehaviour
     {
         if (selectedAnswer == exercises.correctAnswer)
         {
-           
+            feedbackPanel.SetActive(false);
             Exercises.WrongAnswers = 0;
             Exercises.RightAnswers += 1;
             CompleteQuestion(); 
-
-
         }
         else
         {
             feedbackPanel.SetActive(true);
             popupPanel.SetActive(false);
+            feedbackPanel.GetComponentInChildren<TMPro.TMP_Text>().text = exercises.FeedbackText.text;
             Debug.Log("feedbackPanel is active: " + feedbackPanel.activeSelf);
             Exercises.WrongAnswers += 1;
             Exercises.RightAnswers = 0;

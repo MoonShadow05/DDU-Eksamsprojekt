@@ -69,6 +69,13 @@ public class Exercises : MonoBehaviour
                 questionText = questionObj.GetComponent<TMP_Text>();
         }
 
+        if (FeedbackText == null)
+        {
+            var feedbackObj = HUD.transform.Find("FeedbackMenu/FeedbackText");
+            if (feedbackObj != null)
+                FeedbackText = feedbackObj.GetComponent<TMP_Text>();
+        }
+
         // Find buttons under ButtonGroup
         var buttonGroup = HUD.transform.Find("PopupMenu/ButtonGroup");
         /* Debug.Log($"ButtonGroup found: {buttonGroup != null}"); */
