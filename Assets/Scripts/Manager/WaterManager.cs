@@ -45,10 +45,15 @@ public class WaterManager : MonoBehaviour
 
     public float doorSpeed;
 
+    public bool pauseWaterIncrease = false; // Added variable to fix the issue
+
     public float doorTargetHeight;
-    GameObject sm = GameObject.FindGameObjectWithTag("SoundManager");
+
+
+
 
     void Start(){
+        GameObject sm = GameObject.FindGameObjectWithTag("SoundManager");
         if (sm != null) {
             sm.GetComponent<SoundManager>().PlaySound(SoundManager.SoundEffects.StartSound);
         }
@@ -97,6 +102,8 @@ public class WaterManager : MonoBehaviour
     public void OpenDoor(bool DoorShouldOpen, GameObject Door){
         if (DoorShouldOpen == true && Door != null) {
             movingDoors.Add(Door);
+            
+            GameObject sm = GameObject.FindGameObjectWithTag("SoundManager");
             if (sm != null)
             {
                 sm.GetComponent<SoundManager>().PlaySound(SoundManager.SoundEffects.DoorSound);
@@ -185,6 +192,7 @@ public class WaterManager : MonoBehaviour
 
     private void UpdateWater()
     {
+        if (pauseWaterIncrease) return;
         // Totatle vandmængde stiger med dette
         int roomAmount = openRoomCoords.Count;
         float waterIncrease = Mathf.Pow(waterIncreaseRate,waterUpdateAmount) * Time.deltaTime;

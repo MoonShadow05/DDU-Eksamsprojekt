@@ -10,6 +10,7 @@ TagManager:
   - Option 2
   - Option 3
   - Option 1
+  - SoundManager
   layers:
   - Default
   - TransparentFX

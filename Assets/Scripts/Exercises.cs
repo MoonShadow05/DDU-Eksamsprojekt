@@ -17,6 +17,8 @@ public class Exercises : MonoBehaviour
     [HideInInspector] public static int RightAnswers;
     [HideInInspector] public static int WrongAnswers;
 
+     public Exercise currentExercise { get; set; }
+
     [System.Serializable]
     public class Exercise
     {
@@ -65,6 +67,13 @@ public class Exercises : MonoBehaviour
             var questionObj = HUD.transform.Find("PopupMenu/Question");
             if (questionObj != null)
                 questionText = questionObj.GetComponent<TMP_Text>();
+        }
+
+        if (FeedbackText == null)
+        {
+            var feedbackObj = HUD.transform.Find("FeedbackMenu/FeedbackText");
+            if (feedbackObj != null)
+                FeedbackText = feedbackObj.GetComponent<TMP_Text>();
         }
 
         // Find buttons under ButtonGroup
@@ -156,6 +165,7 @@ public class Exercises : MonoBehaviour
         Exercise exercise = selectedList[Random.Range(0, selectedList.Count)];
         correctAnswer = exercise.correctAnswer;
         questionText.text = exercise.question;
+        currentExercise = exercise;
 
         List<string> shuffled = new List<string>(exercise.options);
         ShuffleList(shuffled);
