@@ -128,11 +128,6 @@ public class QuestionPopupTrigger : MonoBehaviour
             popupPanel.SetActive(false);
             feedbackPanel.SetActive(true);
 
-            while (feedbackPanel.activeSelf == true)
-            {
-                
-            }
-
             var feedbackTextUI = feedbackPanel.GetComponentInChildren<TMPro.TMP_Text>();
             if (feedbackTextUI != null && exercises.currentExercise != null)
             {
