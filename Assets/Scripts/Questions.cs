@@ -31,18 +31,18 @@ public class QuestionPopupTrigger : MonoBehaviour
             WaterManager = FindFirstObjectByType<WaterManager>();
 
         // Assign Popup Panel (you can also use a tag or name here)
-       if (popupPanel == null /* || feedbackPanel == null */)
+       if (popupPanel == null || feedbackPanel == null)
         {
             var hud = GameObject.Find("HUD");
             if (hud != null)
             {
                 popupPanel = hud.GetComponentsInChildren<Transform>(true)
                                 .FirstOrDefault(t => t.name == "PopupMenu")?.gameObject;
-                                /* Debug.Log($"Popup Panel Found: {popupPanel != null}"); */
-                /* feedbackPanel = hud.GetComponentsInChildren<Transform>(true)
-                                .FirstOrDefault(t => t.name == "FeedbackPanel")?.gameObject;
+                                 /* Debug.Log($"Popup Panel Found: {popupPanel != null}"); */
+                                 
+                feedbackPanel = hud.GetComponentsInChildren<Transform>(true)
+                                .FirstOrDefault(t => t.name == "FeedbackMenu")?.gameObject;
                                 Debug.Log($"Feedback Panel Found: {feedbackPanel != null}");
- */
             }
         }
 
