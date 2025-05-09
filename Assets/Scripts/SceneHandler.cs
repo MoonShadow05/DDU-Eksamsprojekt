@@ -16,6 +16,9 @@ public class SceneHandler : MonoBehaviour
         SceneManager.LoadScene("Main"); // Loads the scene named "Main"
     }
 
+    public void OnRestartButtonPressed(){
+        SceneManager.LoadScene("Main"); // Loads the scene named "Main"
+    }
     // Call this from the Quit button
     public void OnQuitButtonPressed()
     {
