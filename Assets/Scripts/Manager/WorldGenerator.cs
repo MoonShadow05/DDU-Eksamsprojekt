@@ -43,8 +43,7 @@ using UnityEngine.InputSystem;
         List<List<int>> openings = new List<List<int>>();
         List<List<int>> doors = new List<List<int>>();
 
-        void Start()
-        {
+        void Start(){
             _mazeGrid = new MazeCell[_mazeWidth, _mazeDepth];
 
             for (int x = 0; x < _mazeWidth; x++)

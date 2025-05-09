@@ -17,6 +17,8 @@ public class Exercises : MonoBehaviour
     [HideInInspector] public static int RightAnswers;
     [HideInInspector] public static int WrongAnswers;
 
+     public Exercise currentExercise { get; set; }
+
     [System.Serializable]
     public class Exercise
     {

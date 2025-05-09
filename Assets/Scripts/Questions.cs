@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UIElements;
 
 
 public class QuestionPopupTrigger : MonoBehaviour
@@ -39,7 +40,7 @@ public class QuestionPopupTrigger : MonoBehaviour
                 popupPanel = hud.GetComponentsInChildren<Transform>(true)
                                 .FirstOrDefault(t => t.name == "PopupMenu")?.gameObject;
                                  /* Debug.Log($"Popup Panel Found: {popupPanel != null}"); */
-                                 
+
                 feedbackPanel = hud.GetComponentsInChildren<Transform>(true)
                                 .FirstOrDefault(t => t.name == "FeedbackMenu")?.gameObject;
                                 Debug.Log($"Feedback Panel Found: {feedbackPanel != null}");
@@ -89,8 +90,8 @@ public class QuestionPopupTrigger : MonoBehaviour
             lookScript.SetFrozen(true);
         }
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
 
         /* Debug.Log("Entered question zone"); */
     }
@@ -107,8 +108,8 @@ public class QuestionPopupTrigger : MonoBehaviour
                 lookScript.SetFrozen(false);
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
 
        /*  Debug.Log("Exited question zone"); */
     }
@@ -117,22 +118,21 @@ public class QuestionPopupTrigger : MonoBehaviour
     {
         if (selectedAnswer == exercises.correctAnswer)
         {
-           /*  Debug.Log("✅ Correct!"); */
+           
             Exercises.WrongAnswers = 0;
             Exercises.RightAnswers += 1;
-            Debug.Log(Exercises.WrongAnswers+" "+Exercises.RightAnswers);
             CompleteQuestion(); 
 
 
         }
         else
         {
-            /* Debug.Log("❌ Wrong answer."); */
-           /*  feedbackPanel.SetActive(true);
-            feedbackPanel.GetComponentInChildren<TMPro.TMP_Text>().text = exercises.FeedbackText.text; */
+            feedbackPanel.SetActive(true);
+            popupPanel.SetActive(false);
+            Debug.Log("feedbackPanel is active: " + feedbackPanel.activeSelf);
             Exercises.WrongAnswers += 1;
             Exercises.RightAnswers = 0;
-            Debug.Log(Exercises.WrongAnswers+" "+Exercises.RightAnswers);
+            
         }
     }
 
@@ -141,22 +141,17 @@ public class QuestionPopupTrigger : MonoBehaviour
         popupPanel.SetActive(false);
         triggerCollider.enabled = false;
 
-        /* if (doorBlockerCollider != null)
-            doorBlockerCollider.enabled = false; */
-
         if (cameraScript != null)
             if (cameraScript is PlayerLook lookScript)
                 lookScript.SetFrozen(false);
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
 
         DoorShouldOpen = true;
         DoorPosition = transform.parent.gameObject;
         WaterManager.OpenDoor(DoorShouldOpen, DoorPosition);
 
-
-       /*  Debug.LogError($"✅ Question complete. Door unlocked."); */
     }
 }
  
