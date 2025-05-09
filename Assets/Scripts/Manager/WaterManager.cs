@@ -185,6 +185,11 @@ public class WaterManager : MonoBehaviour
         foundExit = true;
     }
 
+    public float getWaterHeightInStart()
+    {
+        return Height[0, 0];
+    }
+
     private void SpawnWater(int i, int j){
         WaterGrid[i, j] = true;
         Height[i, j] = waterStartHeight;

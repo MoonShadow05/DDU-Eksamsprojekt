@@ -737,7 +737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   compassImage: {fileID: 285454062}
-  player: {fileID: 434582842}
+  player: {fileID: 1604906870130796409}
 --- !u!1001 &304725522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -795,11 +795,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 283d593628c64bc4798f87d8f93525a7, type: 3}
---- !u!4 &434582842 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1604906869826214251, guid: 283d593628c64bc4798f87d8f93525a7, type: 3}
-  m_PrefabInstance: {fileID: 304725522}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &446584318
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +828,7 @@ MonoBehaviour:
   worldGeneration: {fileID: 131683529}
   questions: {fileID: 0}
   waterStartHeight: -8.75
-  waterIncreaseRate: 1.0001
+  waterIncreaseRate: 1.01
   doorSpeed: 15
   pauseWaterIncrease: 0
   doorTargetHeight: 18
@@ -1888,7 +1883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldGeneration: {fileID: 131683529}
   compassIcon: {fileID: 1426608289}
-  player: {fileID: 434582842}
+  player: {fileID: 1604906870130796409}
   sensitivity: 2.5
 --- !u!1 &1627240933
 GameObject:
@@ -2162,6 +2157,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703153993}
   m_CullTransparentMesh: 1
+--- !u!4 &1604906870130796409 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1604906869826214251, guid: 283d593628c64bc4798f87d8f93525a7, type: 3}
+  m_PrefabInstance: {fileID: 304725522}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
