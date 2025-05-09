@@ -165,6 +165,7 @@ public class Exercises : MonoBehaviour
         Exercise exercise = selectedList[Random.Range(0, selectedList.Count)];
         correctAnswer = exercise.correctAnswer;
         questionText.text = exercise.question;
+        currentExercise = exercise;
 
         List<string> shuffled = new List<string>(exercise.options);
         ShuffleList(shuffled);

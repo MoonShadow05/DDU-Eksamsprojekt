@@ -45,6 +45,8 @@ public class WaterManager : MonoBehaviour
 
     public float doorSpeed;
 
+    public bool pauseWaterIncrease = false; // Added variable to fix the issue
+
     public float doorTargetHeight;
 
 
@@ -190,6 +192,7 @@ public class WaterManager : MonoBehaviour
 
     private void UpdateWater()
     {
+        if (pauseWaterIncrease) return;
         // Totatle vandmængde stiger med dette
         int roomAmount = openRoomCoords.Count;
         float waterIncrease = Mathf.Pow(waterIncreaseRate,waterUpdateAmount) * Time.deltaTime;
