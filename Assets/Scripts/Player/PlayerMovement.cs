@@ -6,18 +6,24 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float walkSpeed = 5f;
-    public float sprintSpeed = 10f;
-    public float jumpForce = 8f;
+    public float sprintSpeed = 7.5f;
+    //public float jumpForce = 8f;
     public float gravity = -20f;
 
     private CharacterController controller;
     private Vector3 inputMovement;
     private Vector3 velocity;
-    private bool jumpPressed;
+    //private bool jumpPressed;
+
+    private WaterManager WaterManager;
+    private GameObject player;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+
+        if (WaterManager == null)
+            WaterManager = FindFirstObjectByType<WaterManager>();
     }
 
     void Update()
@@ -31,8 +37,12 @@ public class PlayerMovement : MonoBehaviour
 
         inputMovement = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            jumpPressed = true;
+        //if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        //    jumpPressed = true;
+    }
+    private float getGroundHeight()
+    {
+        return WaterManager.getWaterHeightInStart() - 1f;
     }
 
     void FixedUpdate()
@@ -50,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = (camRight * inputMovement.x + camForward * inputMovement.z).normalized * currentSpeed;
 
+        /*
         if (controller.isGrounded)
         {
             velocity.y = -1f;
@@ -58,6 +69,19 @@ public class PlayerMovement : MonoBehaviour
                 velocity.y = jumpForce;
                 jumpPressed = false;
             }
+        }
+        else
+        {
+            velocity.y += gravity * Time.fixedDeltaTime;
+        }
+        */
+
+        float groundHeight = getGroundHeight();
+        float currentHeight = transform.position.y;
+
+        if (currentHeight < groundHeight)
+        {
+            velocity.y = (groundHeight - currentHeight) / Time.fixedDeltaTime;
         }
         else
         {

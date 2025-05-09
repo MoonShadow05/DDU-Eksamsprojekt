@@ -126,8 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 20
-  sprintSpeed: 35
-  jumpForce: 15
+  sprintSpeed: 30
   gravity: -20
 --- !u!143 &6902615997540080811
 CharacterController:

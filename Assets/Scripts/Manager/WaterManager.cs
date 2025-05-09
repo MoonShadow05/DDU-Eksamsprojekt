@@ -49,7 +49,7 @@ public class WaterManager : MonoBehaviour
 
     public float doorTargetHeight;
 
-
+    private bool foundExit = false;
 
 
     void Start(){
@@ -180,6 +180,16 @@ public class WaterManager : MonoBehaviour
         }
     }
 
+    public void FoundExit()
+    {
+        foundExit = true;
+    }
+
+    public float getWaterHeightInStart()
+    {
+        return Height[0, 0];
+    }
+
     private void SpawnWater(int i, int j){
         WaterGrid[i, j] = true;
         Height[i, j] = waterStartHeight;
@@ -195,7 +205,14 @@ public class WaterManager : MonoBehaviour
         if (pauseWaterIncrease) return;
         // Totatle vandmængde stiger med dette
         int roomAmount = openRoomCoords.Count;
-        float waterIncrease = Mathf.Pow(waterIncreaseRate,waterUpdateAmount) * Time.deltaTime;
+        float waterIncrease;
+        if (foundExit == true)
+        {
+            waterIncrease = 10 * roomAmount * Time.deltaTime;
+        } else
+        {
+            waterIncrease = Mathf.Pow(waterIncreaseRate, waterUpdateAmount) * Time.deltaTime;
+        }
         //Mathf.Pow(baseNumber, exponent)
         totalWaterAmount += waterIncrease; // Den totale vandmængde stigning
 

@@ -421,9 +421,9 @@ MonoBehaviour:
   _openingPrefab: {fileID: 195149882217477, guid: fef9a89244f240e4c93eeed43da4efe2, type: 3}
   _doorPrefab: {fileID: 5735758874266245303, guid: 0292ea2d1a3600a4790304c961a70b65, type: 3}
   _exitCellPrefab: {fileID: 3909610435960452727, guid: 1f7c77535cd379349a2963ab08bec301, type: 3}
-  _mazeWidth: 6
-  _mazeDepth: 6
-  _extraWallBreakPercentage: 15
+  _mazeWidth: 3
+  _mazeDepth: 3
+  _extraWallBreakPercentage: 100
   _doorAmountPercentage: 0
   _prefabSize: 30
 --- !u!4 &131683530
@@ -477,7 +477,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10.000244}
+  m_AnchoredPosition: {x: 0, y: -10.000366}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &160783347
@@ -737,7 +737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   compassImage: {fileID: 285454062}
-  player: {fileID: 434582842}
+  player: {fileID: 1604906870130796409}
 --- !u!1001 &304725522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -795,11 +795,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 283d593628c64bc4798f87d8f93525a7, type: 3}
---- !u!4 &434582842 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1604906869826214251, guid: 283d593628c64bc4798f87d8f93525a7, type: 3}
-  m_PrefabInstance: {fileID: 304725522}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &446584318
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &446584319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,7 +828,7 @@ MonoBehaviour:
   worldGeneration: {fileID: 131683529}
   questions: {fileID: 0}
   waterStartHeight: -8.75
-  waterIncreaseRate: 1.00001
+  waterIncreaseRate: 1.01
   doorSpeed: 15
   pauseWaterIncrease: 0
   doorTargetHeight: 18
@@ -1126,7 +1121,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10.000237}
+  m_AnchoredPosition: {x: 0, y: -10.000122}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &587436121
@@ -1836,7 +1831,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 29.99992}
+  m_AnchoredPosition: {x: 0, y: 29.999878}
   m_SizeDelta: {x: 3060, y: 85}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1426608289
@@ -1888,7 +1883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldGeneration: {fileID: 131683529}
   compassIcon: {fileID: 1426608289}
-  player: {fileID: 434582842}
+  player: {fileID: 1604906870130796409}
   sensitivity: 2.5
 --- !u!1 &1627240933
 GameObject:
@@ -2162,6 +2157,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703153993}
   m_CullTransparentMesh: 1
+--- !u!4 &1604906870130796409 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1604906869826214251, guid: 283d593628c64bc4798f87d8f93525a7, type: 3}
+  m_PrefabInstance: {fileID: 304725522}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
