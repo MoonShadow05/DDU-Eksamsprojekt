@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Linq;
 using System.Collections;
-
+using UnityEngine.UI;
 
 public class QuestionPopupTrigger : MonoBehaviour
 {
@@ -13,16 +13,14 @@ public class QuestionPopupTrigger : MonoBehaviour
     [SerializeField] private MonoBehaviour cameraScript;
     [SerializeField] private Collider doorBlockerCollider;
     [SerializeField] private GameObject feedbackPanel;
+    [SerializeField] private Button CloseFeedbackButton;
+
 
     private Collider triggerCollider;
-
 
     private bool DoorShouldOpen = false;
     private GameObject DoorPosition;
 
-   /*  private void Update(){
-
-    } */
     private void Awake()
     {
         triggerCollider = GetComponent<Collider>();
@@ -32,21 +30,42 @@ public class QuestionPopupTrigger : MonoBehaviour
             WaterManager = FindFirstObjectByType<WaterManager>();
 
         // Assign Popup Panel (you can also use a tag or name here)
-       if (popupPanel == null || feedbackPanel == null)
+        if (popupPanel == null || feedbackPanel == null)
         {
             var hud = GameObject.Find("HUD");
             if (hud != null)
             {
                 popupPanel = hud.GetComponentsInChildren<Transform>(true)
                                 .FirstOrDefault(t => t.name == "PopupMenu")?.gameObject;
-                                 /* Debug.Log($"Popup Panel Found: {popupPanel != null}"); */
 
                 feedbackPanel = hud.GetComponentsInChildren<Transform>(true)
                                 .FirstOrDefault(t => t.name == "FeedbackMenu")?.gameObject;
-                                Debug.Log($"Feedback Panel Found: {feedbackPanel != null}");
+                Debug.Log($"Feedback Panel Found: {feedbackPanel != null}");
+                if (CloseFeedbackButton == null)
+                {
+                    var fbuttonObj = hud.transform.Find("FeedbackMenu/CloseFeedback");
+                    if (fbuttonObj != null)
+                        CloseFeedbackButton = fbuttonObj.GetComponent<Button>();
+                }
+            }
+            else
+            {
+                Debug.LogError("❌ HUD not found. Please assign the PopupPanel and FeedbackPanel in the inspector.");
             }
         }
 
+        if (CloseFeedbackButton != null)
+        {
+            var buttonComponent = CloseFeedbackButton.GetComponent<UnityEngine.UI.Button>();
+            if (buttonComponent != null)
+            {
+                buttonComponent.onClick.AddListener(CloseFeedbackPanel);
+            }
+            else
+            {
+                Debug.LogError("❌ CloseFeedbackButton does not have a Button component.");
+            }
+        }
 
 
         // Assign Exercises script
@@ -56,14 +75,9 @@ public class QuestionPopupTrigger : MonoBehaviour
         // Assign Camera Script (assumes it's on main camera or tagged object)
         if (cameraScript == null)
         {
-            
             if (Camera.main != null && Camera.main.transform.parent != null)
             {
-                /* Debug.Log("✅ PlayerLook script found on CameraHolder."); */
                 cameraScript = Camera.main.transform.parent.GetComponent<PlayerLook>();
-            } else
-            {
-                /* Debug.LogError("❌ PlayerLook script not found on CameraHolder."); */
             }
         }
 
@@ -73,8 +87,9 @@ public class QuestionPopupTrigger : MonoBehaviour
 
         if (popupPanel != null)
             popupPanel.SetActive(false);
-    }
+        
 
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -85,15 +100,12 @@ public class QuestionPopupTrigger : MonoBehaviour
 
         if (cameraScript != null)
         {
-
             if (cameraScript is PlayerLook lookScript)
-            lookScript.SetFrozen(true);
+                lookScript.SetFrozen(true);
         }
 
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
-
-        /* Debug.Log("Entered question zone"); */
     }
 
     private void OnTriggerExit(Collider other)
@@ -102,7 +114,7 @@ public class QuestionPopupTrigger : MonoBehaviour
 
         popupPanel.SetActive(false);
 
-         if (cameraScript != null)
+        if (cameraScript != null)
         {
             if (cameraScript is PlayerLook lookScript)
                 lookScript.SetFrozen(false);
@@ -110,8 +122,6 @@ public class QuestionPopupTrigger : MonoBehaviour
 
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
-
-       /*  Debug.Log("Exited question zone"); */
     }
 
     public void CheckAnswer(string selectedAnswer)
@@ -140,22 +150,21 @@ public class QuestionPopupTrigger : MonoBehaviour
 
             if (WaterManager != null)
             {
-            WaterManager.pauseWaterIncrease = true;
-            Debug.Log("💧 Water increase paused during feedback.");
+                WaterManager.pauseWaterIncrease = true;
+                Debug.Log("💧 Water increase paused during feedback.");
             }
 
-
-            Debug.Log("feedbackPanel is active: " + feedbackPanel.activeSelf);
             Exercises.WrongAnswers += 1;
             Exercises.RightAnswers = 0;
-            StartCoroutine(FeedbackPanelClose());
+            CloseFeedbackButton.onClick.AddListener(() =>
+            {
+                FeedbackPanelClose();
+            });
         }
     }
 
-
-    private IEnumerator FeedbackPanelClose()
+    private void FeedbackPanelClose()
     {
-        yield return new WaitForSeconds(3f);
 
         feedbackPanel.SetActive(false);
         popupPanel.SetActive(true);
@@ -168,8 +177,8 @@ public class QuestionPopupTrigger : MonoBehaviour
         }
 
         exercises.LoadRandomQuestion(this, Exercises.questionDifficulty);
-    }
 
+    }
 
     private void CompleteQuestion()
     {
@@ -186,7 +195,23 @@ public class QuestionPopupTrigger : MonoBehaviour
         DoorShouldOpen = true;
         DoorPosition = transform.parent.gameObject;
         WaterManager.OpenDoor(DoorShouldOpen, DoorPosition);
+    }
 
+    // New method to close feedback panel
+    private void CloseFeedbackPanel()
+    {
+        feedbackPanel.SetActive(false);  // Close the feedback panel
+        popupPanel.SetActive(true);      // Open the popup panel for the next question
+
+        // Resume water increase if needed
+        if (WaterManager != null)
+        {
+            WaterManager.pauseWaterIncrease = false;
+            Debug.Log("💧 Water increase resumed.");
+        }
+
+        Exercises.WrongAnswers = 0;
+        Exercises.RightAnswers = 0;
+        exercises.LoadRandomQuestion(this, Exercises.questionDifficulty);  // Load next question
     }
 }
- 

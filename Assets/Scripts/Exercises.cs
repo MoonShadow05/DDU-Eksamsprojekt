@@ -97,7 +97,7 @@ public class Exercises : MonoBehaviour
         {
             /* Debug.LogWarning("❌ ButtonGroup not found under PopupMenu."); */
         }
-    
+
     }
 }
 
@@ -115,7 +115,7 @@ public class Exercises : MonoBehaviour
         equation = "f(x) = x - 2",
         correctAnswer = "-1",
         options = new string[] { "1", "-2", "-1" },
-        FeedbackText = "Trin 1: f(x) = x - 2;\nTrin 2: Vi ved at x = 1;\nTrin 3: Indsætter i formlen f(1) -> 1 * 1 - 2 = -1"
+        FeedbackText = "Trin 1: f(x) = x - 2;\n\nTrin 2: Vi ved at x = 1;\n\nTrin 3: Indsætter i formlen f(1) -> 1 * 1 - 2 = -1"
     });
 
     easyQuestions.Add(
@@ -124,7 +124,7 @@ public class Exercises : MonoBehaviour
             equation = "f(x) = 2x + 1",
             correctAnswer = "5",
             options = new string[] { "12", "5", "2" },
-            FeedbackText = "Trin 1: f(x) = 2x + 1;\nTrin 2: Vi ved at x = 2;\nTrin 3: Indsætter i formlen f(2) -> 2 * 2 + 1 = 5"
+            FeedbackText = "Trin 1: f(x) = 2x + 1;\n\nTrin 2: Vi ved at x = 2;\n\nTrin 3: Indsætter i formlen f(2) -> 2 * 2 + 1 = 5"
         });
 
     easyQuestions.Add(
@@ -133,7 +133,7 @@ public class Exercises : MonoBehaviour
             equation = "f(x) = x + (-3)",
             correctAnswer = "4",
             options = new string[] { "7", "2", "4" },
-            FeedbackText = "Trin 1: f(x) = x + (-3);\nTrin 2: Vi ved at x = 7;\nTrin 3: Indsætter i formlen f(7) -> 7 + (-3) = 4"
+            FeedbackText = "Trin 1: f(x) = x + (-3);\n\nTrin 2: Vi ved at x = 7;\n\nTrin 3: Indsætter i formlen f(7) -> 7 + (-3) = 4"
         });
 
     easyQuestions.Add(
@@ -142,7 +142,7 @@ public class Exercises : MonoBehaviour
             equation = "f(x) = 3x + (-4)",
             correctAnswer = "23",
             options = new string[] { "23", "13", "20" },
-            FeedbackText = "Trin 1: f(x) = 3x + (-4);\nTrin 2: Vi ved at x = 9;\nTrin 3: Indsætter i formlen f(9) -> 3 * 9 + (-4) = 23"
+            FeedbackText = "Trin 1: f(x) = 3x + (-4);\n\nTrin 2: Vi ved at x = 9;\n\nTrin 3: Indsætter i formlen f(9) -> 3 * 9 + (-4) = 23"
         });
 
     easyQuestions.Add(
@@ -151,7 +151,7 @@ public class Exercises : MonoBehaviour
             equation = "f(x) = 5x + 3",
             correctAnswer = "3",
             options = new string[] { "0", "3", "5" },
-            FeedbackText = "Trin 1: f(x) = 5x + 3;\nTrin 2: Vi ved at x = 0;\nTrin 3: Indsætter i formlen f(0) -> 5 * 0 + 3 = 3"
+            FeedbackText = "Trin 1: f(x) = 5x + 3;\n\nTrin 2: Vi ved at x = 0;\n\nTrin 3: Indsætter i formlen f(0) -> 5 * 0 + 3 = 3"
         });
 
     mediumQuestions.Add(
@@ -160,7 +160,7 @@ public class Exercises : MonoBehaviour
             equation = "A(3, 7) og B(9, 19)",
             correctAnswer = "2",
             options = new string[] { "2", "5", "10" },
-            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\nTrin 2: Indsæt værdierne i formlen: (19 - 7) / (9 - 3);\nTrin 3: Forenkle: 12 / 6 = 2"
+            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\n\nTrin 2: Indsæt værdierne i formlen: (19 - 7) / (9 - 3);\n\nTrin 3: Forenkle: 12 / 6 = 2"
         });
 
     mediumQuestions.Add(
@@ -169,7 +169,7 @@ public class Exercises : MonoBehaviour
             equation = "A(4, 7) og B(7, 10)",
             correctAnswer = "1",
             options = new string[] { "4", "1", "6" },
-            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\nTrin 2: Indsæt værdierne i formlen: (10 - 7) / (7 - 4);\nTrin 3: Forenkle: 3 / 3 = 1"
+            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\n\nTrin 2: Indsæt værdierne i formlen: (10 - 7) / (7 - 4);\n\nTrin 3: Forenkle: 3 / 3 = 1"
         });
 
     mediumQuestions.Add(
@@ -178,7 +178,7 @@ public class Exercises : MonoBehaviour
             equation = "A(4, 21) og B(6, 29)",
             correctAnswer = "4",
             options = new string[] { "6", "7", "4" },
-            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\nTrin 2: Indsæt værdierne i formlen: (29 - 21) / (6 - 4);\nTrin 3: Forenkle: 8 / 2 = 4"
+            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\n\nTrin 2: Indsæt værdierne i formlen: (29 - 21) / (6 - 4);\n\nTrin 3: Forenkle: 8 / 2 = 4"
         });
 
     mediumQuestions.Add(
@@ -187,7 +187,7 @@ public class Exercises : MonoBehaviour
             equation = "A(0, 5) og B(10, 15)",
             correctAnswer = "1",
             options = new string[] { "1", "7", "2" },
-            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\nTrin 2: Indsæt værdierne i formlen: (15 - 5) / (10 - 0);\nTrin 3: Forenkle: 10 / 10 = 1"
+            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\n\nTrin 2: Indsæt værdierne i formlen: (15 - 5) / (10 - 0);\n\nTrin 3: Forenkle: 10 / 10 = 1"
         });
 
     mediumQuestions.Add(
@@ -196,7 +196,7 @@ public class Exercises : MonoBehaviour
             equation = "A(0, 3) og B(9, 48)",
             correctAnswer = "5",
             options = new string[] { "5", "6", "9" },
-            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\nTrin 2: Indsæt værdierne i formlen: (48 - 3) / (9 - 0);\nTrin 3: Forenkle: 45 / 9 = 5"
+            FeedbackText = "Trin 1: Brug formlen = (y2 - y1 / x2 - x1);\n\nTrin 2: Indsæt værdierne i formlen: (48 - 3) / (9 - 0);\n\nTrin 3: Forenkle: 45 / 9 = 5"
         });
 
     hardQuestions.Add(
@@ -205,7 +205,7 @@ public class Exercises : MonoBehaviour
             equation = "5x - 7 = 3x + 9",
             correctAnswer = "8",
             options = new string[] { "-5", "9", "8" },
-            FeedbackText = "Trin 1: Træk 3x -> 2x - 7 = 9;\nTrin 2: Læg 7 til begge sider -> 2x = 16;\nTrin 3: Del med 2 -> x = 8"
+            FeedbackText = "Trin 1: Træk 3x -> 2x - 7 = 9;\n\nTrin 2: Læg 7 til begge sider -> 2x = 16;\n\nTrin 3: Del med 2 -> x = 8"
         });
 
     hardQuestions.Add(
@@ -214,7 +214,7 @@ public class Exercises : MonoBehaviour
             equation = "4x + 6 = 2x + 12",
             correctAnswer = "3",
             options = new string[] { "3", "4", "5" },
-            FeedbackText = "Trin 1: Træk 2x -> 4x - 2x + 6 = 12;\nTrin 2: Læg 6 til begge sider -> 2x = 6;\nTrin 3: Del med 2 -> x = 3"
+            FeedbackText = "Trin 1: Træk 2x -> 4x - 2x + 6 = 12;\n\nTrin 2: Læg 6 til begge sider -> 2x = 6;\n\nTrin 3: Del med 2 -> x = 3"
         });
 
     hardQuestions.Add(
@@ -223,7 +223,7 @@ public class Exercises : MonoBehaviour
             equation = "7x - 4 = 5x + 10",
             correctAnswer = "7",
             options = new string[] { "7", "-3", "5" },
-            FeedbackText = "Trin 1: Træk 5x -> 7x - 5x - 4 = 10;\nTrin 2: Læg 4 til begge sider -> 2x = 14;\nTrin 3: Del med 2 -> x = 7"
+            FeedbackText = "Trin 1: Træk 5x -> 7x - 5x - 4 = 10;\n\nTrin 2: Læg 4 til begge sider -> 2x = 14;\n\nTrin 3: Del med 2 -> x = 7"
         });
 
     hardQuestions.Add(
@@ -232,7 +232,7 @@ public class Exercises : MonoBehaviour
             equation = "8x + 5 = 6x + 15",
             correctAnswer = "5",
             options = new string[] { "9", "12", "5" },
-            FeedbackText = "Trin 1: Træk 6x -> 8x - 6x + 5 = 15;\nTrin 2: Læg 5 til begge sider -> 2x = 10;\nTrin 3: Del med 2 -> x = 5"
+            FeedbackText = "Trin 1: Træk 6x -> 8x - 6x + 5 = 15;\n\nTrin 2: Læg 5 til begge sider -> 2x = 10;\n\nTrin 3: Del med 2 -> x = 5"
         });
 
     hardQuestions.Add(
@@ -241,7 +241,7 @@ public class Exercises : MonoBehaviour
             equation = "10x - 12 = 3x + 9",
             correctAnswer = "3",
             options = new string[] { "4", "1", "3" },
-            FeedbackText = "Trin 1: Træk 3x -> 10x - 3x - 12 = 9;\nTrin 2: Læg 12 til begge sider -> 7x = 21;\nTrin 3: Del med 7 -> x = 3"
+            FeedbackText = "Trin 1: Træk 3x -> 10x - 3x - 12 = 9;\n\nTrin 2: Læg 12 til begge sider -> 7x = 21;\n\nTrin 3: Del med 7 -> x = 3"
         });
 
 
