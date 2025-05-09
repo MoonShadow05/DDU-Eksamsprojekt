@@ -46,9 +46,12 @@ public class WaterManager : MonoBehaviour
     public float doorSpeed;
 
     public float doorTargetHeight;
-    SoundManager soundManager = FindAnyObjectByType<SoundManager>();
+    GameObject sm = GameObject.FindGameObjectWithTag("SoundManager");
+
     void Start(){
-        soundManager.PlaySound(SoundManager.SoundEffects.StartSound);
+        if (sm != null) {
+            sm.GetComponent<SoundManager>().PlaySound(SoundManager.SoundEffects.StartSound);
+        }
         gridWidth = worldGeneration._mazeWidth;
         gridDepth = worldGeneration._mazeDepth;
 
@@ -71,7 +74,6 @@ public class WaterManager : MonoBehaviour
     
     void Update(){
         foreach (GameObject Door in movingDoors) {
-            soundManager.PlaySound(SoundManager.SoundEffects.DoorSound);
             Door.transform.position += new Vector3(0,doorSpeed*Time.deltaTime,0);
             int i = (int) Door.transform.position.x * 2 / prefabSize + 1;
             int j = (int) Door.transform.position.z * 2 / prefabSize + 1;
@@ -95,6 +97,10 @@ public class WaterManager : MonoBehaviour
     public void OpenDoor(bool DoorShouldOpen, GameObject Door){
         if (DoorShouldOpen == true && Door != null) {
             movingDoors.Add(Door);
+            if (sm != null)
+            {
+                sm.GetComponent<SoundManager>().PlaySound(SoundManager.SoundEffects.DoorSound);
+            }
         }
     }
 
