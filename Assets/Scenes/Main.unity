@@ -601,7 +601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   compassImage: {fileID: 285454062}
-  player: {fileID: 0}
+  player: {fileID: 434582842}
 --- !u!1001 &304725522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -659,6 +659,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 283d593628c64bc4798f87d8f93525a7, type: 3}
+--- !u!4 &434582842 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1604906869826214251, guid: 283d593628c64bc4798f87d8f93525a7, type: 3}
+  m_PrefabInstance: {fileID: 304725522}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &446584318
 GameObject:
   m_ObjectHideFlags: 0
