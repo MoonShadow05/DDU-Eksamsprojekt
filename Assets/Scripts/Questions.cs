@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections;
 
 
 public class QuestionPopupTrigger : MonoBehaviour
@@ -120,19 +121,57 @@ public class QuestionPopupTrigger : MonoBehaviour
             feedbackPanel.SetActive(false);
             Exercises.WrongAnswers = 0;
             Exercises.RightAnswers += 1;
-            CompleteQuestion(); 
+            CompleteQuestion();
         }
         else
         {
-            feedbackPanel.SetActive(true);
             popupPanel.SetActive(false);
-            feedbackPanel.GetComponentInChildren<TMPro.TMP_Text>().text = exercises.FeedbackText.text;
+            feedbackPanel.SetActive(true);
+
+            var feedbackTextUI = feedbackPanel.GetComponentInChildren<TMPro.TMP_Text>();
+            if (feedbackTextUI != null && exercises.currentExercise != null)
+            {
+                feedbackTextUI.text = exercises.currentExercise.FeedbackText;
+            }
+            else
+            {
+                Debug.LogWarning("❌ FeedbackTextUI or currentExercise is null.");
+            }
+
+            if (WaterManager != null)
+            {
+                WaterManager.pauseWaterIncrease = true;
+                Debug.Log("💧 Water increase paused during feedback.");
+            }
+
             Debug.Log("feedbackPanel is active: " + feedbackPanel.activeSelf);
             Exercises.WrongAnswers += 1;
             Exercises.RightAnswers = 0;
-            
+
+            // ✅ Wait and retry after 3 seconds
+            StartCoroutine(FeedbackPanelClose());
         }
     }
+
+
+
+    private IEnumerator FeedbackPanelClose()
+    {
+        yield return new WaitForSeconds(3f);
+
+        feedbackPanel.SetActive(false);
+        popupPanel.SetActive(true);
+
+        // ✅ Resume water increase
+        if (WaterManager != null)
+        {
+            WaterManager.pauseWaterIncrease = false;
+            Debug.Log("💧 Water increase resumed.");
+        }
+
+        exercises.LoadRandomQuestion(this, Exercises.questionDifficulty);
+    }
+
 
     private void CompleteQuestion()
     {

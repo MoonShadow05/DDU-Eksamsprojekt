@@ -3,6 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
+    private Collider triggerCollider;
+
+    public void Awake()
+    {
+        triggerCollider = GetComponent<Collider>();
+    }
+
     // Call this from the Start button
     public void OnStartButtonPressed()
     {
@@ -15,9 +22,13 @@ public class SceneHandler : MonoBehaviour
         Debug.Log("Quit button pressed. Exiting game...");
         Application.Quit();
 
-        // Note: This won't quit the game in the Unity editor
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+        Debug.Log("Gået ind i slutning");
+
+    }
+
 }
