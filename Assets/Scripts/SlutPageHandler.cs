@@ -44,14 +44,18 @@ public class SlutPageHandler : MonoBehaviour
     void Update()
     {
         if(sceneHandler.won == true){
-            Won.SetActive(true);
-            Lost.SetActive(false);
-            LostDoor.SetActive(false);
-        }
-        else if(sceneHandler.won == false){
             Won.SetActive(false);
             Lost.SetActive(true);
             LostDoor.SetActive(true);
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+        }
+        else if(sceneHandler.won == false){
+            Won.SetActive(true);
+            Lost.SetActive(false);
+            LostDoor.SetActive(false);
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
         }
     }
 }

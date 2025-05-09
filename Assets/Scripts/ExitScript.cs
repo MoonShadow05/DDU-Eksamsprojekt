@@ -7,6 +7,7 @@ public class ExitScript : MonoBehaviour
     [SerializeField] private GameObject exitCollider;
     [SerializeField] private WaterManager WaterManager;
     [SerializeField] private GameObject player;
+    [SerializeField] private SceneHandler sceneHandler;
 
     private bool atExit = false;
     public bool hasWon = false;
@@ -17,6 +18,8 @@ public class ExitScript : MonoBehaviour
             WaterManager = FindFirstObjectByType<WaterManager>();
         if (player == null)
             player = GameObject.Find("Spiller");
+        if (sceneHandler == null)
+            sceneHandler = FindFirstObjectByType<SceneHandler>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -33,6 +36,7 @@ public class ExitScript : MonoBehaviour
             if (player.transform.position.y >= 17)
             {
                 hasWon = true;
+                sceneHandler.gameEnd(hasWon);
                 Time.timeScale = 0f;
                 Debug.Log("Has won");
             }
