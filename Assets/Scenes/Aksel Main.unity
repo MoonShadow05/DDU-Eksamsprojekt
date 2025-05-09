@@ -421,9 +421,9 @@ MonoBehaviour:
   _openingPrefab: {fileID: 195149882217477, guid: fef9a89244f240e4c93eeed43da4efe2, type: 3}
   _doorPrefab: {fileID: 5735758874266245303, guid: 0292ea2d1a3600a4790304c961a70b65, type: 3}
   _exitCellPrefab: {fileID: 3909610435960452727, guid: 1f7c77535cd379349a2963ab08bec301, type: 3}
-  _mazeWidth: 11
-  _mazeDepth: 11
-  _extraWallBreakPercentage: 100
+  _mazeWidth: 6
+  _mazeDepth: 6
+  _extraWallBreakPercentage: 15
   _doorAmountPercentage: 0
   _prefabSize: 30
 --- !u!4 &131683530
@@ -833,8 +833,9 @@ MonoBehaviour:
   worldGeneration: {fileID: 131683529}
   questions: {fileID: 0}
   waterStartHeight: -8.75
-  waterIncreaseRate: 1.0001
+  waterIncreaseRate: 1.00001
   doorSpeed: 15
+  pauseWaterIncrease: 0
   doorTargetHeight: 18
 --- !u!4 &446584320
 Transform:
@@ -949,6 +950,7 @@ RectTransform:
   - {fileID: 160783346}
   - {fileID: 1352745479}
   - {fileID: 780175251}
+  - {fileID: 1426608288}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 180, y: 90, z: 180}
   m_AnchorMin: {x: 0, y: 0}
@@ -1197,7 +1199,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 285454061}
-  - {fileID: 1426608288}
   m_Father: {fileID: 576242975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
@@ -1826,16 +1827,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1426608287}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7698004, y: 0.7698004, z: 0.7698004}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 780175251}
+  m_Father: {fileID: 576242975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 29.99992}
   m_SizeDelta: {x: 3060, y: 85}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1426608289
@@ -1888,6 +1889,7 @@ MonoBehaviour:
   worldGeneration: {fileID: 131683529}
   compassIcon: {fileID: 1426608289}
   player: {fileID: 434582842}
+  sensitivity: 2.5
 --- !u!1 &1627240933
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,23 +13,20 @@ public class CompassIcon : MonoBehaviour
     public RawImage compassIcon;
     public Transform player;
 
+    public float sensitivity;
+
     private void Start()
     {
-        float xPos = worldGeneration._mazeWidth * worldGeneration._prefabSize;
-        float zPos = worldGeneration._mazeDepth * worldGeneration._prefabSize;
+        float xPos = (worldGeneration._mazeWidth - 1) * worldGeneration._prefabSize;
+        float zPos = (worldGeneration._mazeDepth - 1) * worldGeneration._prefabSize;
         exitPos = new Vector2(xPos, zPos);
     }
 
     void Update()
     {
         float iconAngle = getAngle();
-        Debug.Log(iconAngle);
+        //Debug.Log(iconAngle);
         float playerAngle = player.localEulerAngles.y;
-        
-        if (iconAngle > 180)
-        {
-            iconAngle -= 180;
-        }
 
         iconAngle = 90 - iconAngle;
 
@@ -39,15 +36,16 @@ public class CompassIcon : MonoBehaviour
             playerAngle -= 360;
         }
 
-        //Debug.Log(playerAngle);
+        playerAngle *= -1;
+        playerAngle /= sensitivity;
+        
+        playerAngle = Mathf.Clamp(playerAngle, -17f, 17f);
 
-        playerAngle = Mathf.Clamp(playerAngle, -21f, 21f);
+        float normalized = (playerAngle + 90f) / 180f;
+        float barWidth = compassIcon.rectTransform.rect.width;
+        float newX = (normalized * barWidth) - (barWidth / 2f);
 
-        //float normalized = (playerAngle + 90f) / 180f;
-        //float barWidth = 3060;
-        //float newX = (normalized * barWidth) - (barWidth / 2f);
-
-        //compassIcon.rectTransform.anchoredPosition = new Vector2(newX, compassIcon.rectTransform.anchoredPosition.y);
+        compassIcon.rectTransform.anchoredPosition = new Vector2(newX, compassIcon.rectTransform.anchoredPosition.y);
 
 
 
