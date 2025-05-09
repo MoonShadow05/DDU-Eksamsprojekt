@@ -3,13 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
-    private Collider triggerCollider;
-
-    public void Awake()
-    {
-        triggerCollider = GetComponent<Collider>();
-    }
-
+    public bool won;
+    public void gameEnd(bool hasWon){
+        won = hasWon;
+        SceneManager.LoadScene("SlutPage");
+    }    
     // Call this from the Start button
     public void OnStartButtonPressed()
     {
@@ -24,13 +22,6 @@ public class SceneHandler : MonoBehaviour
     {
         Debug.Log("Quit button pressed. Exiting game...");
         Application.Quit();
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-        Debug.Log("Gået ind i slutning");
 
     }
 
