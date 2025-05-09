@@ -140,19 +140,17 @@ public class QuestionPopupTrigger : MonoBehaviour
 
             if (WaterManager != null)
             {
-                WaterManager.pauseWaterIncrease = true;
-                Debug.Log("💧 Water increase paused during feedback.");
+            WaterManager.pauseWaterIncrease = true;
+            Debug.Log("💧 Water increase paused during feedback.");
             }
+
 
             Debug.Log("feedbackPanel is active: " + feedbackPanel.activeSelf);
             Exercises.WrongAnswers += 1;
             Exercises.RightAnswers = 0;
-
-            // ✅ Wait and retry after 3 seconds
             StartCoroutine(FeedbackPanelClose());
         }
     }
-
 
 
     private IEnumerator FeedbackPanelClose()
