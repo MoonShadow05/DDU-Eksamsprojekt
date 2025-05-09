@@ -8,7 +8,7 @@ public class Exercises : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private TMP_Text questionText;
     [SerializeField] private Button[] answerButtons;
-
+    [SerializeField] private TMP_Text equationText;
     [SerializeField] public TMP_Text FeedbackText;
 
     [HideInInspector] public string correctAnswer;
@@ -23,12 +23,12 @@ public class Exercises : MonoBehaviour
     public class Exercise
     {
         public string question;
+        public string equation;
         public string correctAnswer;
         public string[] options;
 
         public string FeedbackText;
 
-        public int level; // 0 = Easy, 1 = Medium, 2 = Hard
     }
 
     void Update(){
@@ -69,6 +69,14 @@ public class Exercises : MonoBehaviour
                 questionText = questionObj.GetComponent<TMP_Text>();
         }
 
+        // Find equation text
+        if (equationText == null)
+        {
+            var equationObj = HUD.transform.Find("PopupMenu/Equation");
+            if (equationObj != null)
+                equationText = equationObj.GetComponent<TMP_Text>();
+        }
+
         if (FeedbackText == null)
         {
             var feedbackObj = HUD.transform.Find("FeedbackMenu/FeedbackText");
@@ -101,40 +109,147 @@ public class Exercises : MonoBehaviour
         // You can add your own questions here or load them from a file.
         // For now, it's empty.
 
-        // Example question:
-        easyQuestions.Add(
-            new Exercise { question = "Hvad bliver værdien af funktionen f(x) = x - 2, hvor x = 1?", correctAnswer = "-1", options = new string[] { "1", "-2", "-1" }, level = 0, FeedbackText = "Rigtig!" });
-        easyQuestions.Add(
-            new Exercise { question = "Hvad bliver værdien af funktionen f(x) = 2x + 1, hvor x = 2?", correctAnswer = "5", options = new string[] { "12", "5", "2" }, level = 0, FeedbackText = "Rigtig!" });
-        easyQuestions.Add(
-            new Exercise { question = "Hvad bliver værdien af funktionen f(x) = x + (-3), hvor x = 7?", correctAnswer = "4", options = new string[] { "7", "2", "4" }, level = 0, FeedbackText = "Rigtig!" });
-        easyQuestions.Add(
-           new Exercise { question = "Hvad bliver værdien af funktionen f(x) = 3x + (-4), hvor x = 9?", correctAnswer = "23", options = new string[] { "23", "13", "20" }, level = 0, FeedbackText = "Rigtig!" });
-        easyQuestions.Add(
-           new Exercise { question = "Hvad bliver værdien af funktionen f(x) = 5x + 3, hvor x = 0?", correctAnswer = "3", options = new string[] { "0", "3", "5" }, level = 0, FeedbackText = "Rigtig!" });
+    // Easy questions
+     easyQuestions.Add(
+        new Exercise {
+            question = "Hvad bliver værdien, hvor x = 1?",
+            equation = "f(x) = x - 2",
+            correctAnswer = "-1",
+            options = new string[] { "1", "-2", "-1" },
+            FeedbackText = "Vores funktion ser således ud: f(x) = x - 2. Når vi sætter x = 1 ind i funktionen, får vi f(1) = 1 - 2 = -1. Så svaret er -1."
+    });
 
-        mediumQuestions.Add(
-            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(3, 7) og B(9, 19)?", correctAnswer = "2", options = new string[] { "2", "5", "10" }, level = 1, FeedbackText = "Rigtig!" });
-        mediumQuestions.Add(
-            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(4, 7) og B(7, 10)?", correctAnswer = "1", options = new string[] { "4", "1", "6" }, level = 1, FeedbackText = "Rigtig!" });
-        mediumQuestions.Add(
-            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(4, 21) og B(6, 29)", correctAnswer = "4", options = new string[] { "6", "7", "4" }, level = 1, FeedbackText = "Rigtig!" });
-        mediumQuestions.Add(
-            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(0, 5) og (10, 15)", correctAnswer = "1", options = new string[] { "1", "7", "2" }, level = 1, FeedbackText = "Rigtig!" });
-        mediumQuestions.Add(
-            new Exercise { question = "Hvad er hældningen af denne rette linje gennem punkterne A(0, 3) og (9, 48)", correctAnswer = "5", options = new string[] { "5", "6", "9" }, level = 1, FeedbackText = "Rigtig!" });
+    easyQuestions.Add(
+        new Exercise {
+            question = "Hvad bliver værdien, hvor x = 2?",
+            equation = "f(x) = 2x + 1",
+            correctAnswer = "5",
+            options = new string[] { "12", "5", "2" },
+            FeedbackText = "Vores funktion ser således ud: f(x) = 2x + 1. Når vi sætter x = 2 ind i funktionen, får vi f(2) = 2*2 + 1 = 4 + 1 = 5. Så svaret er 5."
+        });
 
+    easyQuestions.Add(
+        new Exercise {
+            question = "Hvad bliver værdien, hvor x = 7?",
+            equation = "f(x) = x + (-3)",
+            correctAnswer = "4",
+            options = new string[] { "7", "2", "4" },
+            FeedbackText = "Vores funktion ser således ud: f(x) = x - 3. Når vi sætter x = 7 ind i funktionen, får vi f(7) = 7 - 3 = 4. Så svaret er 4."
+        });
 
-        hardQuestions.Add(
-            new Exercise { question = "Du skal løse denne ligning og finde x: 5x - 7 = 3x + 9?", correctAnswer = "8", options = new string[] { "-5", "9", "8" }, level = 2, FeedbackText = "Rigtig!" });
-        hardQuestions.Add(
-            new Exercise { question = "Du skal løse denne ligning og finde x: 4x + 6 = 2x + 12?", correctAnswer = "3", options = new string[] { "3", "4", "5" }, level = 2, FeedbackText = "Rigtig!" });
-        hardQuestions.Add(
-            new Exercise { question = "Du skal løse denne ligning og finde x: 7x - 4 = 5x + 10?", correctAnswer = "7", options = new string[] { "7", "-3", "5" }, level = 2, FeedbackText = "Rigtig!" });
-        hardQuestions.Add(
-            new Exercise { question = "Du skal løse denne ligning og finde x: 8x + 5 = 6x + 15?", correctAnswer = "5", options = new string[] { "9", "12", "5" }, level = 2, FeedbackText = "Rigtig!" });
-        hardQuestions.Add(
-            new Exercise { question = "Du skal løse denne ligning og finde x: 10x - 12 = 3x + 9?", correctAnswer = "3", options = new string[] { "4", "1", "3" }, level = 2, FeedbackText = "Rigtig!" });
+    easyQuestions.Add(
+        new Exercise {
+            question = "Hvad bliver værdien, hvor x = 9?",
+            equation = "f(x) = 3x + (-4)",
+            correctAnswer = "23",
+            options = new string[] { "23", "13", "20" },
+            FeedbackText = "Vores funktion ser således ud: f(x) = 3x - 4. Når vi sætter x = 9 ind i funktionen, får vi f(9) = 3*9 - 4 = 27 - 4 = 23. Så svaret er 23."
+        });
+
+    easyQuestions.Add(
+        new Exercise {
+            question = "Hvad bliver værdien, hvor x = 0?",
+            equation = "f(x) = 5x + 3",
+            correctAnswer = "3",
+            options = new string[] { "0", "3", "5" },
+            FeedbackText = "Vores funktion ser således ud: f(x) = 5x + 3. Når vi sætter x = 0 ind i funktionen, får vi f(0) = 5*0 + 3 = 0 + 3 = 3. Så svaret er 3."
+        });
+
+    // Medium questions
+        mediumQuestions.Add(
+            new Exercise {
+                question = "Hvad er hældningen af denne rette linje gennem punkterne?",
+                equation = "A(3, 7) og B(9, 19)",
+                correctAnswer = "2",
+                options = new string[] { "2", "5", "10" },
+                FeedbackText = "Vi kender de to punkter på linjen A(3, 7) og B(9, 19). Hældningen (m) kan findes ved at bruge formlen m = (y2 - y1) / (x2 - x1). Her er (x1, y1) = (3, 7) og (x2, y2) = (9, 19). Så m = (19 - 7) / (9 - 3) = 12 / 6 = 2. Så svaret er 2.",
+        });
+
+    mediumQuestions.Add(
+        new Exercise {
+            question = "Hvad er hældningen af denne rette linje gennem punkterne?",
+            equation = "A(4, 7) og B(7, 10)",
+            correctAnswer = "1",
+            options = new string[] { "4", "1", "6" },
+            FeedbackText = "Vi kender de to punkter på linjen A(4, 7) og B(7, 10). Hældningen (m) kan findes ved at bruge formlen m = (y2 - y1) / (x2 - x1). Her er (x1, y1) = (4, 7) og (x2, y2) = (7, 10). Så m = (10 - 7) / (7 - 4) = 3 / 3 = 1. Så svaret er 1.",
+            
+        });
+
+    mediumQuestions.Add(
+        new Exercise {
+            question = "Hvad er hældningen af denne rette linje gennem punkterne?",
+            equation = "A(4, 21) og B(6, 29)",
+            correctAnswer = "4",
+            options = new string[] { "6", "7", "4" },
+            FeedbackText = "Vi kender de to punkter på linjen A(4, 21) og B(6, 29). Hældningen (m) kan findes ved at bruge formlen m = (y2 - y1) / (x2 - x1). Her er (x1, y1) = (4, 21) og (x2, y2) = (6, 29). Så m = (29 - 21) / (6 - 4) = 8 / 2 = 4. Så svaret er 4.",
+            
+        });
+
+    mediumQuestions.Add(
+        new Exercise {
+            question = "Hvad er hældningen af denne rette linje gennem punkterne?",
+            equation = "A(0, 5) og B(10, 15)",
+            correctAnswer = "1",
+            options = new string[] { "1", "7", "2" },
+            FeedbackText = "Vi kender de to punkter på linjen A(0, 5) og B(10, 15). Hældningen (m) kan findes ved at bruge formlen m = (y2 - y1) / (x2 - x1). Her er (x1, y1) = (0, 5) og (x2, y2) = (10, 15). Så m = (15 - 5) / (10 - 0) = 10 / 10 = 1. Så svaret er 1.",
+            
+        });
+
+    mediumQuestions.Add(
+        new Exercise {
+            question = "Hvad er hældningen af denne rette linje gennem punkterne?",
+            equation = "A(0, 3) og B(9, 48)",
+            correctAnswer = "5",
+            options = new string[] { "5", "6", "9" },
+            FeedbackText = "Vi kender de to punkter på linjen A(0, 3) og B(9, 48). Hældningen (m) kan findes ved at bruge formlen m = (y2 - y1) / (x2 - x1). Her er (x1, y1) = (0, 3) og (x2, y2) = (9, 48). Så m = (48 - 3) / (9 - 0) = 45 / 9 = 5. Så svaret er 5.",
+            
+        });
+
+    // Hard questions
+    hardQuestions.Add(
+        new Exercise {
+            question = "Du skal løse denne ligning og finde x:",
+            equation = "5x - 7 = 3x + 9",
+            correctAnswer = "8",
+            options = new string[] { "-5", "9", "8" },
+            FeedbackText = "Det første du kan gøre, er at trække 3x fra begge sider af lighedstegnet. Det giver os 5x - 3x - 7 = 9. Det kan vi forenkle til 2x - 7 = 9. Derefter kan vi lægge 7 til begge sider af lighedstegnet, så vi får 2x = 16. Til sidst kan vi dividere begge sider med 2, så x = 8.",
+    });
+
+    hardQuestions.Add(
+        new Exercise {
+            question = "Du skal løse denne ligning og finde x:",
+            equation = "4x + 6 = 2x + 12",
+            correctAnswer = "3",
+            options = new string[] { "3", "4", "5" },
+            FeedbackText = "Det første du kan gøre, er at trække 2x fra begge sider af lighedstegnet. Det giver os 4x - 2x + 6 = 12. Det kan vi forenkle til 2x + 6 = 12. Derefter kan vi trække 6 fra begge sider af lighedstegnet, så vi får 2x = 6. Til sidst kan vi dividere begge sider med 2, så x = 3.",
+        });
+
+    hardQuestions.Add(
+        new Exercise {
+            question = "Du skal løse denne ligning og finde x:",
+            equation = "7x - 4 = 5x + 10",
+            correctAnswer = "7",
+            options = new string[] { "7", "-3", "5" },
+            FeedbackText = "Det første du kan gøre, er at trække 5x fra begge sider af lighedstegnet. Det giver os 7x - 5x - 4 = 10. Det kan vi forenkle til 2x - 4 = 10. Derefter kan vi lægge 4 til begge sider af lighedstegnet, så vi får 2x = 14. Til sidst kan vi dividere begge sider med 2, så x = 7.",
+        });
+
+    hardQuestions.Add(
+        new Exercise {
+            question = "Du skal løse denne ligning og finde x:",
+            equation = "8x + 5 = 6x + 15",
+            correctAnswer = "5",
+            options = new string[] { "9", "12", "5" },
+            FeedbackText = "Det første du kan gøre, er at trække 6x fra begge sider af lighedstegnet. Det giver os 8x - 6x + 5 = 15. Det kan vi forenkle til 2x + 5 = 15. Derefter kan vi trække 5 fra begge sider af lighedstegnet, så vi får 2x = 10. Til sidst kan vi dividere begge sider med 2, så x = 5.",
+        });
+
+    hardQuestions.Add(
+        new Exercise {
+            question = "Du skal løse denne ligning og finde x:",
+            equation = "10x - 12 = 3x + 9",
+            correctAnswer = "3",
+            options = new string[] { "4", "1", "3" },
+            FeedbackText = "Det første du kan gøre, er at trække 3x fra begge sider af lighedstegnet. Det giver os 10x - 3x - 12 = 9. Det kan vi forenkle til 7x - 12 = 9. Derefter kan vi lægge 12 til begge sider af lighedstegnet, så vi får 7x = 21. Til sidst kan vi dividere begge sider med 7, så x = 3.",
+        });
 
 
     }
@@ -165,6 +280,7 @@ public class Exercises : MonoBehaviour
         Exercise exercise = selectedList[Random.Range(0, selectedList.Count)];
         correctAnswer = exercise.correctAnswer;
         questionText.text = exercise.question;
+        equationText.text = exercise.equation;
         currentExercise = exercise;
 
         List<string> shuffled = new List<string>(exercise.options);
