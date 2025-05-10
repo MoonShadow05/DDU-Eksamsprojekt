@@ -1291,7 +1291,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1386,9 +1386,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - Audio: {fileID: 8300000, guid: 20dbbaa6e87dd96499ad6f709d069788, type: 3}
+  - Audio: {fileID: 0}
     Type: 0
-  - Audio: {fileID: 8300000, guid: 87f17bdc7131f794585e82130eca7c60, type: 3}
+  - Audio: {fileID: 0}
     Type: 1
 --- !u!4 &478240481
 Transform:
