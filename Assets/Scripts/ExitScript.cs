@@ -10,9 +10,9 @@ public class ExitScript : MonoBehaviour
     [SerializeField] private SceneHandler sceneHandler;
 
     private bool atExit = false;
-    public bool hasWon = false;
+    public bool hasWon;
 
-    private void Start()
+    private void Awake()
     {
         if (WaterManager == null)
             WaterManager = FindFirstObjectByType<WaterManager>();
@@ -31,14 +31,21 @@ public class ExitScript : MonoBehaviour
     }
     private void Update()
     {
-        if (atExit == true)
-        {
+        if (atExit == true){
             if (player.transform.position.y >= 17)
             {
                 hasWon = true;
+                Debug.Log("Has won");
                 sceneHandler.gameEnd(hasWon);
                 Time.timeScale = 0f;
-                Debug.Log("Has won");
+  
+            }
+        }
+        else{
+            if(WaterManager.getWaterHeightInStart()>2.6){
+                hasWon = false;
+                sceneHandler.gameEnd(hasWon);
+                Debug.Log("DØD");
             }
         }
     }

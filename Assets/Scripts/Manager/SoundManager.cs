@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour
     [System.Serializable]
     struct Sounds
     {
-        public AudioClip Audio;
+        public AudioSource Audio;
         public SoundEffects Type;
     };
 
@@ -34,8 +34,7 @@ public class SoundManager : MonoBehaviour
         {
             if (sound.Type == type)
             {
-                Audiosrc.clip = sound.Audio;
-                Audiosrc.Play();
+                sound.Audio.Play();
                 Debug.Log("LYD AFSPILLET!");
             }
         }

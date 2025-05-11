@@ -6,11 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/StartPage.unity
+    guid: 6461cf55e00122a428c42f5e1b62e30f
+  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/SlutPage.unity
+    path: Assets/Scenes/LostPage.unity
     guid: a0a9cc677db6d2649a9ca190b607f7ab
+  - enabled: 1
+    path: Assets/Scenes/WonPage.unity
+    guid: f8e2a79912d3f2148b908318be321ffb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

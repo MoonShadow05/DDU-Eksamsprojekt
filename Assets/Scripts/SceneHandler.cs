@@ -3,11 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
-    public bool won;
-    public void gameEnd(bool hasWon){
-        won = hasWon;
-        SceneManager.LoadScene("SlutPage");
-    }    
+    public bool hasWon;
+
+    public void gameEnd(bool won){
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+        if(won){
+            SceneManager.LoadScene("WonPage");
+        }
+        else{
+            SceneManager.LoadScene("LostPage");
+        }
+
+    }
     // Call this from the Start button
     public void OnStartButtonPressed()
     {
