@@ -101,13 +101,11 @@ public class WaterManager : MonoBehaviour
 
     public void OpenDoor(bool DoorShouldOpen, GameObject Door){
         if (DoorShouldOpen == true && Door != null) {
-            movingDoors.Add(Door);
-            
             GameObject sm = GameObject.FindGameObjectWithTag("SoundManager");
-            if (sm != null)
-            {
+            if (sm != null){
                 sm.GetComponent<SoundManager>().PlaySound(SoundManager.SoundEffects.DoorSound);
             }
+            movingDoors.Add(Door);
         }
     }
 
